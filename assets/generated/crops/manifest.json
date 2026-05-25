@@ -1,0 +1,125 @@
+{
+  "source": "assets/generated/moon-camp-asset-sheet.png",
+  "alpha_sheet": "assets/generated/moon-camp-asset-sheet-alpha.png",
+  "assets": {
+    "hero_idle": {
+      "path": "assets/generated/crops/hero_idle.png",
+      "size": [
+        164,
+        266
+      ]
+    },
+    "hero_attack": {
+      "path": "assets/generated/crops/hero_attack.png",
+      "size": [
+        276,
+        254
+      ]
+    },
+    "enemy_moss_slime": {
+      "path": "assets/generated/crops/enemy_moss_slime.png",
+      "size": [
+        183,
+        183
+      ]
+    },
+    "enemy_mushroom": {
+      "path": "assets/generated/crops/enemy_mushroom.png",
+      "size": [
+        196,
+        217
+      ]
+    },
+    "enemy_root_sprout": {
+      "path": "assets/generated/crops/enemy_root_sprout.png",
+      "size": [
+        184,
+        241
+      ]
+    },
+    "icon_coins": {
+      "path": "assets/generated/crops/icon_coins.png",
+      "size": [
+        204,
+        180
+      ]
+    },
+    "icon_moon_shard": {
+      "path": "assets/generated/crops/icon_moon_shard.png",
+      "size": [
+        162,
+        181
+      ]
+    },
+    "ui_button_primary": {
+      "path": "assets/generated/crops/ui_button_primary.png",
+      "size": [
+        332,
+        148
+      ]
+    },
+    "ui_button_secondary": {
+      "path": "assets/generated/crops/ui_button_secondary.png",
+      "size": [
+        318,
+        148
+      ]
+    },
+    "ui_bar_health": {
+      "path": "assets/generated/crops/ui_bar_health.png",
+      "size": [
+        536,
+        93
+      ]
+    },
+    "ui_bar_xp": {
+      "path": "assets/generated/crops/ui_bar_xp.png",
+      "size": [
+        548,
+        90
+      ]
+    },
+    "tab_adventure": {
+      "path": "assets/generated/crops/tab_adventure.png",
+      "size": [
+        173,
+        167
+      ]
+    },
+    "tab_upgrade": {
+      "path": "assets/generated/crops/tab_upgrade.png",
+      "size": [
+        170,
+        167
+      ]
+    },
+    "tab_bag": {
+      "path": "assets/generated/crops/tab_bag.png",
+      "size": [
+        173,
+        167
+      ]
+    },
+    "tab_quest": {
+      "path": "assets/generated/crops/tab_quest.png",
+      "size": [
+        177,
+        167
+      ]
+    },
+    "icon_notification": {
+      "path": "assets/generated/crops/icon_notification.png",
+      "size": [
+        73,
+        79
+      ]
+    },
+    "fx_sparkles": {
+      "path": "assets/generated/crops/fx_sparkles.png",
+      "size": [
+        822,
+        100
+      ]
+    }
+  }
+}
