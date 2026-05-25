@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小咪变成人啦！大冒险 | 月森营地像素放置 RPG</title>
+    <meta
+      name="description"
+      content="小咪变成人啦！大冒险是一个 iOS 竖屏优先的 cozy pixel idle RPG。进入月森营地，和小咪、nico、图图、嘟嘟一起自动战斗、收集掉落、点亮营地。"
+    />
+    <link rel="icon" type="image/png" href="../assets/generated/crops/icon_moon_shard.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="world-canvas" aria-hidden="true"></canvas>
+
+    <nav class="site-nav" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span class="brand-mark">咪</span>
+        <span>小咪大冒险</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="打开菜单" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#play">试玩</a>
+        <a href="#camp">营地</a>
+        <a href="#loop">玩法</a>
+        <a href="#companions">伙伴</a>
+        <a href="#gallery">图鉴</a>
+        <a href="#join" class="nav-cta">内测登记</a>
+      </div>
+    </nav>
+
+    <main id="top">
+      <section class="hero" data-zone="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <span>MOON FOREST CAMP · AUTO BATTLE · PIXEL IDLE RPG · XIAOMI ADVENTURE · </span>
+            <span>MOON FOREST CAMP · AUTO BATTLE · PIXEL IDLE RPG · XIAOMI ADVENTURE · </span>
+          </div>
+        </div>
+
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow reveal"><span></span>月森营地正在点灯</p>
+            <h1 class="hero-title reveal">
+              小咪变成人啦！<br />
+              <strong>大冒险</strong>
+            </h1>
+            <p class="hero-lead reveal">
+              一个给小咪和她的专属观众准备的竖屏像素放置 RPG。每天 3 分钟，收一点亮晶晶，喂一点小鱼干，把营地变得更像家。
+            </p>
+            <div class="hero-actions reveal">
+              <a class="btn primary" href="#play">开始试玩</a>
+              <a class="btn secondary" href="#camp">进入月森营地</a>
+            </div>
+          </div>
+
+          <div class="hero-stage reveal" aria-label="小咪冒险预览">
+            <div class="moon-card">
+              <div class="moon-status">
+                <span>Lv.5</span>
+                <span>月森营地冒险者</span>
+              </div>
+              <div class="stage-field">
+                <img class="stage-bg" src="../assets/generated/moon-camp-background.png" alt="" />
+                <img class="hero-sprite floaty" src="../assets/generated/crops/hero_idle.png" alt="像素小咪冒险者" />
+                <img class="enemy-sprite bob" src="../assets/generated/crops/enemy_mushroom.png" alt="夜巡蘑菇" />
+                <img class="sparkle sparkle-a" src="../assets/generated/crops/fx_sparkles.png" alt="" />
+                <img class="sparkle sparkle-b" src="../assets/generated/crops/fx_sparkles.png" alt="" />
+              </div>
+              <div class="moon-panel">
+                <span>夜巡蘑菇</span>
+                <div class="hp-bar"><i></i></div>
+                <button class="mini-attack" type="button">攻击一下</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-strip reveal" aria-label="核心亮点">
+          <div>
+            <strong data-count="7">0</strong>
+            <span>正式伙伴</span>
+          </div>
+          <div>
+            <strong data-count="5">0</strong>
+            <span>底部页签</span>
+          </div>
+          <div>
+            <strong data-count="3">0</strong>
+            <span>每日副本</span>
+          </div>
+          <div>
+            <strong>3-8</strong>
+            <span>分钟日常</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section play-section" id="play">
+        <div class="split-heading reveal">
+          <div>
+            <p class="section-kicker">Playable Web Build</p>
+            <h2>官网不只展示，它要能直接打开月森。</h2>
+          </div>
+          <p>这里接入 Godot Web 试玩包。进入后就是当前竖屏原型：自动战斗、升级、任务、背包、伙伴和收藏都会在同一个手机画幅里跑起来。</p>
+        </div>
+
+        <div class="play-grid">
+          <article class="game-card reveal">
+            <div class="game-toolbar">
+              <div>
+                <span class="chip">Godot 4 Web</span>
+                <h3>月森营地试玩</h3>
+              </div>
+              <span class="game-led" id="game-status">待启动</span>
+            </div>
+            <div class="game-frame-shell" id="game-shell">
+              <div class="game-placeholder" id="game-placeholder">
+                <img src="../assets/generated/crops/hero_idle.png" alt="小咪冒险者" />
+                <h3>唤醒月森营地</h3>
+                <p>试玩包会在当前页面内加载，也可以单独打开一个浏览器窗口。</p>
+                <button class="btn primary" id="launch-game" type="button">启动试玩</button>
+              </div>
+              <iframe
+                id="game-frame"
+                title="小咪变成人啦！大冒险 Web 试玩"
+                allow="fullscreen; autoplay"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="game-actions">
+              <button class="btn pixel" id="reload-game" type="button">重载试玩</button>
+              <button class="btn pixel muted" id="fullscreen-game" type="button">全屏</button>
+              <a class="btn pixel muted" id="game-open-link" href="game/index.html" target="_blank" rel="noreferrer">新窗口</a>
+            </div>
+          </article>
+
+          <aside class="play-notes reveal" aria-label="试玩版本状态">
+            <div>
+              <span>01</span>
+              <h3>竖屏优先</h3>
+              <p>沿用 390 × 844 的手机画幅，让官网里的试玩和 iOS 目标方向一致。</p>
+            </div>
+            <div>
+              <span>02</span>
+              <h3>真实循环</h3>
+              <p>不是视频，也不是假截图；战斗、掉落、签到和装备成长来自当前 Godot 原型。</p>
+            </div>
+            <div>
+              <span>03</span>
+              <h3>公网投放</h3>
+              <p>发布目录会交给 GitHub Pages，不依赖本机公网 IP。</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section camp-section" id="camp">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Live Camp</p>
+          <h2>营地不是截图，是会回应你的。</h2>
+          <p>进来就能看到小咪巡逻、打怪、收奖励。每一次点击，都会让月森营地多亮一点。</p>
+        </div>
+
+        <div class="camp-grid">
+          <article class="play-console reveal">
+            <div class="console-top">
+              <div>
+                <span class="chip">当前构建</span>
+                <h3>今晚巡逻记录</h3>
+              </div>
+              <div class="wallet">
+                <span><img src="../assets/generated/items/icon_coins_large.png" alt="" /> <b id="gold-count">544</b></span>
+                <span><img src="../assets/generated/items/item_dried_fish.png" alt="" /> <b id="snack-count">20</b></span>
+              </div>
+            </div>
+            <div class="battle-box">
+              <div class="battle-scene">
+                <img class="scene-bg" src="../assets/generated/moon-camp-background.png" alt="" />
+                <img id="fighter" class="fighter" src="../assets/generated/crops/hero_idle.png" alt="冒险者" />
+                <img id="target" class="target" src="../assets/generated/crops/enemy_moss_slime.png" alt="苔影史莱姆" />
+                <div class="slash" id="slash"></div>
+              </div>
+              <div class="battle-ui">
+                <div class="enemy-line">
+                  <span id="enemy-name">苔影史莱姆</span>
+                  <span id="enemy-hp">28 / 28</span>
+                </div>
+                <div class="hp-bar active"><i id="enemy-bar"></i></div>
+                <p id="battle-log">小咪认真盯着草丛，好像那里藏着什么。</p>
+                <div class="console-actions">
+                  <button class="btn pixel" id="attack-btn" type="button">手动攻击</button>
+                  <button class="btn pixel muted" id="claim-btn" type="button">领取巡逻</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside class="phone-preview reveal">
+            <div class="phone-shell">
+              <img src="../output/screenshots/prototype-private-collectibles-companion-final00000000.png" alt="当前游戏手机截图" />
+            </div>
+            <div class="phone-caption">
+              <span>390 × 844</span>
+              <p>竖屏营地、底部面板、像素伙伴，都为每天打开手机看一眼而设计。</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section loop-section" id="loop">
+        <div class="split-heading reveal">
+          <div>
+            <p class="section-kicker">Adventure Loop</p>
+            <h2>五个页签，就是每天的小冒险。</h2>
+          </div>
+          <p>战斗、战力、背包、副本、伙伴，各司其职；不堆复杂系统，只留下每天愿意回来的理由。</p>
+        </div>
+
+        <div class="loop-tabs reveal" role="tablist" aria-label="玩法页签">
+          <button class="active" type="button" data-loop="battle">战斗</button>
+          <button type="button" data-loop="power">战力</button>
+          <button type="button" data-loop="bag">背包</button>
+          <button type="button" data-loop="dungeon">副本</button>
+          <button type="button" data-loop="friend">伙伴</button>
+        </div>
+
+        <div class="loop-panel reveal" id="loop-panel">
+          <div class="loop-copy">
+            <span id="loop-tag">01 / 自动推进</span>
+            <h3 id="loop-title">小咪会自己打，但你点一下会更有参与感。</h3>
+            <p id="loop-desc">自动攻击、手动补刀、掉落浮字和低概率私人日志，让放置循环有一点“她真的在冒险”的感觉。</p>
+          </div>
+          <div class="loop-visual" id="loop-visual">
+            <img src="../assets/generated/crops/hero_attack.png" alt="攻击动作" />
+            <div>
+              <strong>+14G</strong>
+              <span>暖木碎片 x1</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section companions-section" id="companions">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Companions</p>
+          <h2>不是抽卡池，是营地里的熟面孔。</h2>
+          <p>每个伙伴都有自己的样子、身份、上阵能力和辅助能力；它们不是数字，是会被记住的同行者。</p>
+        </div>
+
+        <div class="companion-showcase reveal">
+          <div class="companion-stage">
+            <img id="companion-image" src="../assets/generated/companions/companion_xiaomi_cat.png" alt="小咪猫" />
+            <div class="companion-aura"></div>
+          </div>
+          <div class="companion-info">
+            <span id="companion-role">主线伙伴</span>
+            <h3 id="companion-name">小咪猫</h3>
+            <p id="companion-desc">所有亮晶晶的东西，最后都会被小咪认真扒拉一下。</p>
+            <div class="ability-grid">
+              <div>
+                <b id="companion-active">亮晶晶扒拉</b>
+                <span>上阵能力</span>
+              </div>
+              <div>
+                <b id="companion-support">亮晶晶提醒</b>
+                <span>辅助能力</span>
+              </div>
+            </div>
+          </div>
+          <div class="companion-picker" aria-label="伙伴选择">
+            <button class="active" type="button" data-companion="xiaomi">
+              <img src="../assets/generated/companions/companion_xiaomi_cat.png" alt="" />
+              <span>小咪</span>
+            </button>
+            <button type="button" data-companion="nico">
+              <img src="../assets/generated/companions/companion_nico.png" alt="" />
+              <span>nico</span>
+            </button>
+            <button type="button" data-companion="little">
+              <img src="../assets/generated/companions/companion_little_xiaomi_cat.png" alt="" />
+              <span>小小咪</span>
+            </button>
+            <button type="button" data-companion="zizi">
+              <img src="../assets/generated/companions/companion_zizi.png" alt="" />
+              <span>姊姊</span>
+            </button>
+            <button type="button" data-companion="meimei">
+              <img src="../assets/generated/companions/companion_meimei.png" alt="" />
+              <span>妹妹</span>
+            </button>
+            <button type="button" data-companion="tutu">
+              <img src="../assets/generated/companions/companion_tutu.png" alt="" />
+              <span>图图</span>
+            </button>
+            <button type="button" data-companion="dudu">
+              <img src="../assets/generated/companions/companion_dudu.png" alt="" />
+              <span>嘟嘟</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section gallery-section" id="gallery">
+        <div class="split-heading reveal">
+          <div>
+            <p class="section-kicker">Collection</p>
+            <h2>掉落、护符、收藏，都要有自己的样子。</h2>
+          </div>
+          <p>物品不是一串清单。金币、小鱼干、月泉钥匙和私人收藏，都会在月森图鉴里留下位置。</p>
+        </div>
+
+        <div class="loot-board reveal">
+          <button class="loot-card active" type="button" data-loot="bell">
+            <img src="../assets/generated/items/collectible_laifu_bell.png" alt="来福圣遗物铃铛" />
+            <span>来福圣遗物铃铛</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="drinker">
+            <img src="../assets/generated/items/collectible_nico_drinker.png" alt="nico 爱喝的小猫饮水机" />
+            <span>小猫饮水机</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="sword">
+            <img src="../assets/generated/items/weapon_moon_guardian_blade.png" alt="月森守护刃" />
+            <span>月森守护刃</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="crystal">
+            <img src="../assets/generated/items/item_moon_crystal.png" alt="月露结晶" />
+            <span>月露结晶</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="key">
+            <img src="../assets/generated/items/item_moon_key.png" alt="月泉钥匙" />
+            <span>月泉钥匙</span>
+          </button>
+        </div>
+
+        <article class="loot-detail reveal" id="loot-detail">
+          <span>圣遗物</span>
+          <h3>听见铃声，就说明亮晶晶要被小咪认真收好了。</h3>
+          <p>小咪羁绊 1 级后生效：每次扒拉金币 +1G。</p>
+        </article>
+      </section>
+
+      <section class="section roadmap-section">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Next Build</p>
+          <h2>月森会继续长大。</h2>
+          <p>现在官网已经接入试玩；下一步继续把营地、伙伴、掉落和每日循环磨得更像一个每天愿意打开的小世界。</p>
+        </div>
+        <div class="roadmap">
+          <div class="road-card reveal">
+            <span>01</span>
+            <h3>月森首屏</h3>
+            <p>完整品牌视觉、全屏像素场景、互动战斗预览。</p>
+          </div>
+          <div class="road-card reveal">
+            <span>02</span>
+            <h3>伙伴图鉴</h3>
+            <p>七个伙伴的形象、能力、故事和收藏入口。</p>
+          </div>
+          <div class="road-card reveal">
+            <span>03</span>
+            <h3>公网入口</h3>
+            <p>GitHub Pages 承载官网和 Web 试玩包，后续迭代推送后自动更新。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta" id="join">
+        <div class="cta-bg" aria-hidden="true"></div>
+        <div class="final-copy reveal">
+          <p class="section-kicker">Moon Forest Alpha</p>
+          <h2>今晚，营地先为你点一盏灯。</h2>
+          <p>试玩之后留下一个名字，后续版本就把新的月森入口继续交给真正要玩的人。</p>
+        </div>
+        <form class="signup reveal">
+          <label>
+            <span>你的称呼</span>
+            <input type="text" name="name" placeholder="例如：小咪观察员" />
+          </label>
+          <label>
+            <span>想优先看的内容</span>
+            <select name="focus">
+              <option>伙伴和私人收藏</option>
+              <option>自动战斗和副本</option>
+              <option>营地装饰和相册</option>
+              <option>手机试玩体验</option>
+            </select>
+          </label>
+          <button class="btn primary" type="submit">登记内测</button>
+          <p id="signup-note" aria-live="polite">当前为本地预览，提交不会联网。</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>小咪变成人啦！大冒险</strong>
+        <p>Cozy pixel idle RPG · Godot 4 · iOS portrait first</p>
+      </div>
+      <a href="#top">回到月森入口</a>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+# Godot 4 generated files
+.godot/
+*.tmp
+*.translation
+.godot-*.log
+__pycache__/
+*.pyc
+
+# Godot export artifacts
+exports/
+output/
+*.pck
+*.zip
+*.ipa
+*.apk
+*.aab
+!xiaomi/game/*.pck
+!xiaomi/game/*.html
+!xiaomi/game/*.js
+!xiaomi/game/*.png
+!xiaomi/game/*.wasm
+xiaomi/**/*.import
+
+# macOS
+.DS_Store
+
+# Local environment
+.env
+.env.*
+
+# Local browser QA artifacts
+.playwright-cli/
+
+# Generated asset rejects are QA scratch, not shippable content
+assets/generated/rejected/

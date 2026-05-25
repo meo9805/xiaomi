@@ -1,0 +1,236 @@
+{
+  "sources": {
+    "generated_image_dir": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b",
+    "item_icon_sheet": ""
+  },
+  "companions": {
+    "companion_nico": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dbc8b3808196913c58a2d3dd40c0.png",
+      "path": "assets/generated/companions/companion_nico.png",
+      "size": [
+        217,
+        256
+      ]
+    },
+    "companion_xiaomi_cat": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dc0b74608196b286721601da5584.png",
+      "path": "assets/generated/companions/companion_xiaomi_cat.png",
+      "size": [
+        208,
+        256
+      ]
+    },
+    "companion_little_xiaomi_cat": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dc458b38819692739c9a74ad5470.png",
+      "path": "assets/generated/companions/companion_little_xiaomi_cat.png",
+      "size": [
+        243,
+        256
+      ]
+    },
+    "companion_zizi": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dc80640c8196af0967ef79a859b8.png",
+      "path": "assets/generated/companions/companion_zizi.png",
+      "size": [
+        235,
+        256
+      ]
+    },
+    "companion_meimei": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dd181a0081968d33bf6765bd11ca.png",
+      "path": "assets/generated/companions/companion_meimei.png",
+      "size": [
+        244,
+        256
+      ]
+    },
+    "companion_tutu": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dd58135081968b21f72ec6e4fef6.png",
+      "path": "assets/generated/companions/companion_tutu.png",
+      "size": [
+        156,
+        256
+      ]
+    },
+    "companion_dudu": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13dd9907a08196ac8a9c234d75ba5c.png",
+      "path": "assets/generated/companions/companion_dudu.png",
+      "size": [
+        127,
+        256
+      ]
+    }
+  },
+  "vfx": {
+    "fx_attack_slash": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13def4c0048196849a6faae194d46d.png",
+      "path": "assets/generated/vfx/fx_attack_slash.png",
+      "size": [
+        384,
+        353
+      ]
+    }
+  },
+  "items": {
+    "item_moss_dew": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13c6377674819091be84c68a9644df.png",
+      "path": "assets/generated/items/item_moss_dew.png",
+      "size": [
+        239,
+        256
+      ]
+    },
+    "item_moon_spore": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13c87d853881909f754a8d88db4c3b.png",
+      "path": "assets/generated/items/item_moon_spore.png",
+      "size": [
+        241,
+        256
+      ]
+    },
+    "item_warm_wood": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13c8d4e3ac81908ab2e004aa93ab30.png",
+      "path": "assets/generated/items/item_warm_wood.png",
+      "size": [
+        212,
+        256
+      ]
+    },
+    "item_dried_fish": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13c94cf1dc819081ce0b51e5ea19ef.png",
+      "path": "assets/generated/items/item_dried_fish.png",
+      "size": [
+        256,
+        203
+      ]
+    },
+    "item_moon_crystal": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13c99987008190a286c86879569147.png",
+      "path": "assets/generated/items/item_moon_crystal.png",
+      "size": [
+        203,
+        256
+      ]
+    },
+    "item_moon_key": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13ce025adc819094c314dede598410.png",
+      "path": "assets/generated/items/item_moon_key.png",
+      "size": [
+        233,
+        256
+      ]
+    },
+    "item_camp_materials": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d32299448190be8b04f76ba3a982.png",
+      "path": "assets/generated/items/item_camp_materials.png",
+      "size": [
+        256,
+        249
+      ]
+    },
+    "icon_coins_large": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d2ce44d8819098455cc2ff0e90b5.png",
+      "path": "assets/generated/items/icon_coins_large.png",
+      "size": [
+        255,
+        233
+      ]
+    },
+    "weapon_wood_sword": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d42c2bf48190af40eacb313ecc2f.png",
+      "path": "assets/generated/items/weapon_wood_sword.png",
+      "size": [
+        241,
+        256
+      ]
+    },
+    "weapon_moon_dagger": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d47ac9b481908dbfc830180d6d47.png",
+      "path": "assets/generated/items/weapon_moon_dagger.png",
+      "size": [
+        232,
+        256
+      ]
+    },
+    "weapon_spore_saber": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d4c59d708190981b7ab5119cde50.png",
+      "path": "assets/generated/items/weapon_spore_saber.png",
+      "size": [
+        236,
+        255
+      ]
+    },
+    "weapon_warmwood_longsword": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d51b990c8190abf165ce4053a58f.png",
+      "path": "assets/generated/items/weapon_warmwood_longsword.png",
+      "size": [
+        246,
+        256
+      ]
+    },
+    "weapon_moon_guardian_blade": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d576206881908b7f91cccd66a611.png",
+      "path": "assets/generated/items/weapon_moon_guardian_blade.png",
+      "size": [
+        212,
+        256
+      ]
+    },
+    "talisman_old_copper": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d69b3b188190b2c291a6d18704b9.png",
+      "path": "assets/generated/items/talisman_old_copper.png",
+      "size": [
+        216,
+        256
+      ]
+    },
+    "talisman_mosslight": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d6eae6908190864cdfcb140de973.png",
+      "path": "assets/generated/items/talisman_mosslight.png",
+      "size": [
+        221,
+        256
+      ]
+    },
+    "talisman_moonspore": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d73d10148190971dc52f228469fe.png",
+      "path": "assets/generated/items/talisman_moonspore.png",
+      "size": [
+        221,
+        256
+      ]
+    },
+    "talisman_warmwood": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d7a1a9188190bf6a17d68e652738.png",
+      "path": "assets/generated/items/talisman_warmwood.png",
+      "size": [
+        199,
+        256
+      ]
+    },
+    "talisman_moonforest": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0957971add0e8f2d016a13d80378ac81908179cc87a03c7af8.png",
+      "path": "assets/generated/items/talisman_moonforest.png",
+      "size": [
+        213,
+        256
+      ]
+    },
+    "collectible_laifu_bell": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13da73e248819686b44e5f54e9862d.png",
+      "path": "assets/generated/items/collectible_laifu_bell.png",
+      "size": [
+        228,
+        256
+      ]
+    },
+    "collectible_nico_drinker": {
+      "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0246d53896ce36b7016a13d9bab98c8196a7d6cbe92c8b06b4.png",
+      "path": "assets/generated/items/collectible_nico_drinker.png",
+      "size": [
+        197,
+        256
+      ]
+    }
+  }
+}
