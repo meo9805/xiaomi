@@ -6,7 +6,7 @@
     <title>小咪变成人啦！大冒险 | 月森营地像素放置 RPG</title>
     <meta
       name="description"
-      content="小咪变成人啦！大冒险是一个 iOS 竖屏优先的 cozy pixel idle RPG。进入月森营地，和小咪、nico、图图、嘟嘟一起自动战斗、收集掉落、点亮营地。"
+      content="小咪变成人啦！大冒险是一个 iOS 竖屏优先的 cozy pixel idle RPG。进入月森营地，挑战第二月泉守望者，收集第二月泪和静月花瓣，完成月泉觉醒、章节结算与静月尾声。"
     />
     <link rel="icon" type="image/png" href="assets/generated/crops/icon_moon_shard.png" />
     <link rel="stylesheet" href="styles.css" />
@@ -25,6 +25,7 @@
       </button>
       <div class="nav-links">
         <a href="#play">试玩</a>
+        <a href="#chapter">章节</a>
         <a href="#camp">营地</a>
         <a href="#loop">玩法</a>
         <a href="#companions">伙伴</a>
@@ -51,7 +52,7 @@
               <strong>大冒险</strong>
             </h1>
             <p class="hero-lead reveal">
-              一个给小咪和她的专属观众准备的竖屏像素放置 RPG。每天 3 分钟，收一点亮晶晶，喂一点小鱼干，把营地变得更像家。
+              一个给小咪和她的专属观众准备的竖屏像素放置 RPG。现在已经走到第一章后段：第二口月泉、第二月泪、静月坡、装备觉醒和章节尾声都能在试玩里跑起来。
             </p>
             <div class="hero-actions reveal">
               <a class="btn primary" href="#play">开始试玩</a>
@@ -91,12 +92,12 @@
             <span>底部页签</span>
           </div>
           <div>
-            <strong data-count="3">0</strong>
-            <span>每日副本</span>
+            <strong data-count="7">0</strong>
+            <span>副本/试炼</span>
           </div>
           <div>
-            <strong>3-8</strong>
-            <span>分钟日常</span>
+            <strong>24</strong>
+            <span>区阶段路线</span>
           </div>
         </div>
       </section>
@@ -107,7 +108,7 @@
             <p class="section-kicker">Playable Web Build</p>
             <h2>官网不只展示，它要能直接打开月森。</h2>
           </div>
-          <p>这里接入 Godot Web 试玩包。进入后就是当前竖屏原型：自动战斗、升级、任务、背包、伙伴和收藏都会在同一个手机画幅里跑起来。</p>
+          <p>这里接入 Godot Web 试玩包。进入后就是当前竖屏原型：自动战斗、部位强化、真实装备掉落、Boss 试炼、静月坡巡礼、月泉觉醒和章节奖励都在同一个手机画幅里跑起来。</p>
         </div>
 
         <div class="play-grid">
@@ -149,14 +150,84 @@
             <div>
               <span>02</span>
               <h3>真实循环</h3>
-              <p>不是视频，也不是假截图；战斗、掉落、签到和装备成长来自当前 Godot 原型。</p>
+              <p>不是视频，也不是假截图；战斗、掉落、签到、Boss、装备觉醒和章节结算来自当前 Godot 原型。</p>
             </div>
             <div>
               <span>03</span>
-              <h3>公网投放</h3>
-              <p>发布目录会交给 GitHub Pages，不依赖本机公网 IP。</p>
+              <h3>可持续投放</h3>
+              <p>发布目录交给 GitHub Pages；每次更新 Web 包后，公网试玩入口会跟着刷新。</p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="section chapter-section" id="chapter">
+        <div class="split-heading reveal">
+          <div>
+            <p class="section-kicker">Second Moon Build</p>
+            <h2>第一章后段，终于有了守门人和尾声。</h2>
+          </div>
+          <p>第 14 区打开月森前哨，第 20 区唤醒第二口月泉，第 24 区接上静月坡。击败守望者后，第二月泪和静月花瓣会进入装备觉醒、相册、称号和章节目标。</p>
+        </div>
+
+        <div class="chapter-grid reveal">
+          <article class="boss-showcase">
+            <div class="boss-art">
+              <img class="boss-fx" src="assets/generated/vfx/fx_moon_spring_slash.png" alt="" />
+              <img class="boss-image" src="assets/generated/bosses/boss_second_moon_warden.png" alt="第二月泉守望者" />
+            </div>
+            <div class="boss-copy">
+              <span class="chip danger">第 20 区 Boss</span>
+              <h3>第二月泉守望者</h3>
+              <p>森林根须和弯月晶核聚成的守卫。低血量会进入“月泉共鸣”，击败后掉落第二月泪，第一章后段的成长从这里真正打开。</p>
+              <div class="boss-stats" aria-label="Boss 目标">
+                <span>月泉共鸣</span>
+                <span>130 秒倒计时</span>
+                <span>专属剑光</span>
+              </div>
+            </div>
+          </article>
+
+          <aside class="chapter-rewards" aria-label="章节奖励">
+            <div>
+              <img src="assets/generated/items/item_second_moon_tear.png" alt="第二月泪" />
+              <span>第二月泪</span>
+              <p>武器提高攻击，护符提高巡逻、离线和任务金币收益。</p>
+            </div>
+            <div>
+              <img src="assets/generated/items/item_chapter1_crest.png" alt="第一章徽章" />
+              <span>第一章徽章</span>
+              <p>完成第 20 区、Boss 和任意月泉觉醒后领取章节结算。</p>
+            </div>
+            <div>
+              <img src="assets/generated/items/item_quiet_moon_petal.png" alt="静月花瓣" />
+              <span>静月花瓣</span>
+              <p>静月坡巡礼产出，点亮第一章静月尾声和后续路线。</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="chapter-milestones reveal">
+          <div>
+            <span>14</span>
+            <h3>月森前哨</h3>
+            <p>定向掉落月森守护套装备件，让第 10 区后的目标更明确。</p>
+          </div>
+          <div>
+            <span>20</span>
+            <h3>第二口月泉</h3>
+            <p>消耗月露结晶挑战第二月泉守望者，通关后进入第一章后段闭环。</p>
+          </div>
+          <div>
+            <span>21+</span>
+            <h3>月根回廊</h3>
+            <p>第二月泉之后继续产出月露结晶，为静月坡巡礼准备材料。</p>
+          </div>
+          <div>
+            <span>24</span>
+            <h3>静月坡</h3>
+            <p>完成静月坡巡礼后，静月花瓣会把第一章尾声记录进营地手册。</p>
+          </div>
         </div>
       </section>
 
@@ -164,7 +235,7 @@
         <div class="section-heading reveal">
           <p class="section-kicker">Live Camp</p>
           <h2>营地不是截图，是会回应你的。</h2>
-          <p>进来就能看到小咪巡逻、打怪、收奖励。每一次点击，都会让月森营地多亮一点。</p>
+          <p>进来就能看到小咪巡逻、打怪、收奖励。现在连第二月泉守望者也会加入预览战斗，每一次点击都会让月森营地多亮一点。</p>
         </div>
 
         <div class="camp-grid">
@@ -219,7 +290,7 @@
             <p class="section-kicker">Adventure Loop</p>
             <h2>五个页签，就是每天的小冒险。</h2>
           </div>
-          <p>战斗、战力、背包、副本、伙伴，各司其职；不堆复杂系统，只留下每天愿意回来的理由。</p>
+          <p>战斗、战力、背包、副本、伙伴，各司其职；装备掉落、月泉觉醒、静月巡礼和章节目标都尽量放在自然的日常循环里。</p>
         </div>
 
         <div class="loop-tabs reveal" role="tablist" aria-label="玩法页签">
@@ -312,7 +383,7 @@
             <p class="section-kicker">Collection</p>
             <h2>掉落、护符、收藏，都要有自己的样子。</h2>
           </div>
-          <p>物品不是一串清单。金币、小鱼干、月泉钥匙和私人收藏，都会在月森图鉴里留下位置。</p>
+          <p>物品不是一串清单。金币、小鱼干、月泉钥匙、第二月泪、静月花瓣和章节徽章，都会在月森图鉴里留下位置。</p>
         </div>
 
         <div class="loot-board reveal">
@@ -336,6 +407,18 @@
             <img src="assets/generated/items/item_moon_key.png" alt="月泉钥匙" />
             <span>月泉钥匙</span>
           </button>
+          <button class="loot-card" type="button" data-loot="secondMoon">
+            <img src="assets/generated/items/item_second_moon_tear.png" alt="第二月泪" />
+            <span>第二月泪</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="crest">
+            <img src="assets/generated/items/item_chapter1_crest.png" alt="第一章徽章" />
+            <span>第一章徽章</span>
+          </button>
+          <button class="loot-card" type="button" data-loot="petal">
+            <img src="assets/generated/items/item_quiet_moon_petal.png" alt="静月花瓣" />
+            <span>静月花瓣</span>
+          </button>
         </div>
 
         <article class="loot-detail reveal" id="loot-detail">
@@ -347,25 +430,30 @@
 
       <section class="section roadmap-section">
         <div class="section-heading reveal">
-          <p class="section-kicker">Next Build</p>
-          <h2>月森会继续长大。</h2>
-          <p>现在官网已经接入试玩；下一步继续把营地、伙伴、掉落和每日循环磨得更像一个每天愿意打开的小世界。</p>
+          <p class="section-kicker">Current Build</p>
+          <h2>这次更新，把第一章的尾巴接上了。</h2>
+          <p>官网现在展示的不只是首轮营地循环，而是包含第 20 区 Boss、第二月泪觉醒、静月坡巡礼和章节尾声的当前试玩内容。</p>
         </div>
         <div class="roadmap">
           <div class="road-card reveal">
             <span>01</span>
-            <h3>月森首屏</h3>
-            <p>完整品牌视觉、全屏像素场景、互动战斗预览。</p>
+            <h3>第二月泉</h3>
+            <p>Boss 素材、专属剑光、低血量共鸣和胜败反馈都已进入试玩。</p>
           </div>
           <div class="road-card reveal">
             <span>02</span>
-            <h3>伙伴图鉴</h3>
-            <p>七个伙伴的形象、能力、故事和收藏入口。</p>
+            <h3>月泉觉醒</h3>
+            <p>第二月泪不只是收藏品，会推动武器和护符进入第一章后段成长。</p>
           </div>
           <div class="road-card reveal">
             <span>03</span>
-            <h3>公网入口</h3>
-            <p>GitHub Pages 承载官网和 Web 试玩包，后续迭代推送后自动更新。</p>
+            <h3>章节结算</h3>
+            <p>第 20 区、Boss、觉醒三段目标完成后，第一章徽章和称号会被点亮。</p>
+          </div>
+          <div class="road-card reveal">
+            <span>04</span>
+            <h3>静月尾声</h3>
+            <p>第 24 区静月坡已经接入后续巡礼，静月花瓣会进入图鉴、目标和章节尾声。</p>
           </div>
         </div>
       </section>
@@ -374,8 +462,8 @@
         <div class="cta-bg" aria-hidden="true"></div>
         <div class="final-copy reveal">
           <p class="section-kicker">Moon Forest Alpha</p>
-          <h2>今晚，营地先为你点一盏灯。</h2>
-          <p>试玩之后留下一个名字，后续版本就把新的月森入口继续交给真正要玩的人。</p>
+          <h2>今晚，第二口月泉和静月坡都亮起来了。</h2>
+          <p>试玩之后留下一个名字，后续版本就把新的 Boss、装备、花瓣和章节路线继续交给真正要玩的人。</p>
         </div>
         <form class="signup reveal">
           <label>
