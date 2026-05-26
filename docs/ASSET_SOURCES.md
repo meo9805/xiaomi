@@ -72,3 +72,42 @@
   - 项目路径：`assets/generated/vfx/fx_attack_slash.png`
   - 用途：手动攻击时绘制完整剑光贴图，替代原先临时线条为主的效果；绘制区域已扩大，避免剑光视觉上被裁掉。
   - QA：`tools/qa_asset_edges.py` 已通过；Godot smoke 覆盖特效贴图加载和扩大后的攻击闪光区域。
+
+- Linear battle area map
+  - 来源：Codex 内置 image 生成，横向 16-bit 月森线性地图，无文字、无角色，用作战斗页挂机区域选择底图。
+  - 原始默认保存位置：`/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0fc95e61857e708b016a141d1b24288190a2576f2999c9cba8.png`
+  - 项目路径：`assets/generated/ui/battle_area_map.png`
+  - 用途：战斗页怪物血条下方的线性挂机地图，叠加 5 个代码绘制的区域节点和当前掉落提示。
+  - QA：已在 Godot 390x844 战斗截图中检查移动端可读性；该图不是透明抠图，不进入透明边缘 QA。
+
+- Second Moon Spring boss set
+  - 来源：Codex 内置 image 生成，原图为 3 个单体素材的横向表；生成器未输出真 alpha，因此只保留原图，项目内用专用脚本转成真透明 PNG。
+  - 原始默认保存位置：`/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0a13abd370e71d77016a15017a40248196bc04b9d12334a861.png`
+  - 项目路径：`assets/generated/bosses/boss_second_moon_warden.png`、`assets/generated/items/item_second_moon_tear.png`、`assets/generated/vfx/fx_moon_spring_slash.png`
+  - 处理脚本：`tools/process_second_moon_assets.py`
+  - 用途：第 20 区 Boss“第二月泉守望者”、专属掉落“第二月泪”和 Boss 月泉剑光特效。
+  - QA：`tools/qa_asset_edges.py` 已通过；脚本会移除白底、清理淡色边缘，并把靠透明边缘的纯白高光压到项目调色板的奶油月光/淡紫色。Boss 外沿月晶属于有意高光，使用单独 QA 阈值并已做深海军蓝背景预览。
+
+- Chapter 1 completion crest
+  - 来源：Codex 内置 image/image2 生成，单主体章节徽章图标；生成器输出为白底图，因此保留原图并转真透明。
+  - 原始默认保存位置：`/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0296eb97826c2188016a1512a560f081958517266e0c5a0b80.png`
+  - 项目路径：`assets/generated/items/item_chapter1_crest.png`
+  - 处理脚本：`tools/process_chapter_assets.py`
+  - 用途：第一章 · 月森营地章节结算目标、章节称号和章节奖励详情弹窗。
+  - QA：`tools/qa_asset_edges.py` 已通过；已在 390x844 章节详情弹窗中检查移动端可读性。
+
+- Moonlit UI kit
+  - 来源：Codex 内置 image/image2 生成，单张 UI 套件图，使用绿色色键背景后本地清理。
+  - 原始默认保存位置：`/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0696072409e942de016a151c08c0e08195ad7c2927928a8d3d.png`
+  - 项目路径：`assets/generated/ui/ui_modal_panel.png`、`assets/generated/ui/ui_hud_panel.png`、`assets/generated/ui/ui_button_primary.png`、`assets/generated/ui/ui_button_secondary.png`、`assets/generated/ui/ui_tab_selected.png`、`assets/generated/ui/ui_tab_idle.png`、`assets/generated/ui/ui_progress_xp.png`、`assets/generated/ui/ui_progress_hp.png`、`assets/generated/ui/ui_section_card.png`
+  - 处理脚本：`tools/process_ui_kit.py`
+  - 用途：顶部/底部 HUD 面板、详情弹窗框、内容分区卡、主按钮/次按钮、页签和进度条底框。
+  - QA：`tools/qa_asset_edges.py` 已纳入 `assets/generated/ui`；绿色色键残留和白边均为 0，并已做 390x844 截图验收。
+
+- Quiet Moon Petal
+  - 来源：Codex 内置 image/image2 生成，单主体后段材料图标；生成器使用绿色色键背景，项目内转真透明。
+  - 原始默认保存位置：`/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0696072409e942de016a152370dec081958f50ac59e7363a4c.png`
+  - 项目路径：`assets/generated/items/item_quiet_moon_petal.png`
+  - 处理脚本：`tools/process_quiet_moon_assets.py`
+  - 用途：第 24 区“静月坡”挂机掉落、静月坡巡礼门票/奖励、月泉觉醒 Lv.2+ 消耗、第一章静月尾声章节目标。
+  - QA：`tools/qa_asset_edges.py` 已通过；图标在深色背景下预览无明显绿色残留。

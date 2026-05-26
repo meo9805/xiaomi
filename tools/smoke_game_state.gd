@@ -13,6 +13,10 @@ func _run() -> void:
 	root.add_child(main)
 	await process_frame
 
+	_assert(main.sprite_textures.has("ui_modal_panel") and main.sprite_textures.has("ui_button_primary"), "generated UI kit textures are loaded")
+	_assert(main.attack_button.get_theme_stylebox("normal") is StyleBoxTexture, "action buttons use generated UI texture styles")
+	_assert(main.xp_bar.get_theme_stylebox("background") is StyleBoxTexture, "progress bars use generated UI texture frames")
+
 	main.inventory.clear()
 	main.materials = 0
 	main.companion_id = "xiaomi"
@@ -34,9 +38,11 @@ func _run() -> void:
 	main._add_item("苔影露珠", 1)
 	_assert(int(main.inventory.get("苔影露珠", 0)) == 1, "drop item is added to inventory")
 	_assert(main._inventory_summary().contains("苔影露珠 x1"), "inventory tab can render drop count")
+	main.inventory_section = "equipment"
 	main._set_tab("inventory")
 	await process_frame
 	_assert(main.content_stack.get_child_count() >= 8, "inventory tab renders equipment set guide and clickable rows")
+	_assert(main.secondary_nav_row.visible and main.secondary_nav_row.get_child_count() == 3, "inventory tab shows frozen secondary category buttons")
 	_assert(main.content_scroll.custom_minimum_size.y >= 400.0, "inventory tab expands scroll reading area")
 	_assert(not main.action_row.visible and not main.upgrade_row.visible, "inventory tab hides global action rows")
 	_assert(main._detail_row_height("护符 · 苔光护符 Lv.1  [已穿戴]", "当前护符提供 +1 巡逻/任务收益等级。 · 旧铜护符 -> 苔光护符，巡逻/任务 +1。材料已齐，可强化。") > 43, "long detail rows grow instead of leaking text")
@@ -95,6 +101,8 @@ func _run() -> void:
 	main.level = 8
 	main.training_rank = 2
 	main.equipped_weapon_rank = 1
+	main.equipment_inventory = {"weapon_0": 1, "talisman_0": 1}
+	main.loaded_equipment_inventory = true
 	main.gold = 0
 	main.materials = 0
 	main.inventory.clear()
@@ -109,6 +117,8 @@ func _run() -> void:
 	_assert(dungeon_tab_text.contains("亮晶晶洞穴"), "dungeon tab renders unlocked gold dungeon row")
 	_assert(dungeon_tab_text.contains("孢子巢穴"), "dungeon tab renders unlocked spore dungeon row")
 	_assert(dungeon_tab_text.contains("月泉试炼"), "dungeon tab renders locked moon spring trial row")
+	_assert(dungeon_tab_text.contains("月森前哨"), "dungeon tab renders stage 14 outpost row")
+	_assert(dungeon_tab_text.contains("第二口月泉"), "dungeon tab renders stage 20 boss preview row")
 	main._open_detail(main._dungeon_detail("gold_cave"))
 	_assert(main.detail_overlay.visible, "dungeon detail popup opens")
 	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "dungeon detail popup shows reward artwork")
@@ -116,6 +126,7 @@ func _run() -> void:
 	main._on_detail_primary()
 	_assert(int(main.dungeon_attempts.get("gold_cave", 0)) == 1, "successful dungeon challenge spends one attempt")
 	_assert(main.gold > 0, "gold dungeon grants gold")
+	_assert(int(main.equipment_inventory.get("weapon_1", 0)) >= 1, "gold dungeon grants an equipment drop")
 	_assert(main._daily_task_progress_value("clear_dungeon") >= 1, "successful dungeon challenge advances daily task")
 	_assert(main.dungeon_feedback_title.contains("通关"), "successful dungeon challenge shows feedback banner")
 	_assert(main.dungeon_feedback_timer > 0.0, "dungeon feedback banner stays visible briefly")
@@ -136,6 +147,146 @@ func _run() -> void:
 	_assert(int(main.dungeon_attempts.get("spore_nest", 0)) == 1, "spore dungeon success spends attempt")
 	_assert(main._has_item("月光孢子", 3), "spore dungeon grants targeted material")
 	_assert(main._is_album_unlocked("spore_nest_clear"), "spore dungeon unlocks album entry")
+	main.stage = 14
+	main.camp_rank = 2
+	main.level = 18
+	main.training_rank = 10
+	main.weapon_rank = 4
+	main.talisman_rank = 4
+	main.equipped_weapon_rank = 3
+	main.equipped_talisman_rank = 2
+	main._run_dungeon("moon_guard_outpost")
+	_assert(int(main.dungeon_attempts.get("moon_guard_outpost", 0)) == 1, "stage 14 outpost success spends attempt")
+	_assert(int(main.equipment_inventory.get("weapon_4", 0)) >= 1 and int(main.equipment_inventory.get("talisman_4", 0)) >= 1, "stage 14 outpost grants final-set equipment drops")
+	main.stage = 20
+	main.camp_rank = 3
+	main.level = 34
+	main.training_rank = 22
+	main.weapon_rank = 4
+	main.talisman_rank = 4
+	main.equipped_weapon_rank = 4
+	main.equipped_talisman_rank = 4
+	main._add_item("月露结晶", 3)
+	var second_moon_attempts_before: int = int(main.dungeon_attempts.get("second_moon_spring_preview", 0))
+	main._open_detail(main._dungeon_detail("second_moon_spring_preview"))
+	_assert(main.detail_primary_button.text == "挑战" and not main.detail_primary_button.disabled, "stage 20 second moon detail allows challenge")
+	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "stage 20 second moon detail shows generated boss artwork")
+	_assert(_node_text(main.detail_extra_container).contains("第二月泪"), "stage 20 second moon detail shows unique boss drop in sections")
+	main._hide_detail_overlay()
+	main._run_dungeon("second_moon_spring_preview")
+	_assert(int(main.dungeon_attempts.get("second_moon_spring_preview", 0)) == second_moon_attempts_before + 1, "stage 20 second moon challenge spends one attempt")
+	_assert(main.boss_active and main.active_boss_id == "second_moon_warden", "stage 20 second moon starts generated boss encounter")
+	_assert(main.boss_intro_timer > 0.0, "stage 20 second moon starts boss intro feedback")
+	_assert(main.dungeon_feedback_body.contains("第二口月泉"), "stage 20 second moon entry uses dedicated boss feedback")
+	_assert(str(main.enemy.get("sprite", "")) == "boss_second_moon_warden", "stage 20 second moon uses generated boss sprite")
+	_assert(str(main.enemy.get("attack_fx", "")) == "fx_moon_spring_slash", "stage 20 second moon uses generated attack VFX")
+	_assert(main._has_item("月露结晶", 1) and not main._has_item("第二月泪", 1), "stage 20 second moon consumes entry crystals before boss reward")
+	main._open_detail(main._boss_detail("second_moon_warden"))
+	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "second moon boss detail popup shows artwork")
+	main._hide_detail_overlay()
+	main.enemy_hp = int(float(main.enemy_max_hp) * 0.40)
+	main.active_boss_saved_hp = main.enemy_hp
+	main._deal_damage(false)
+	_assert(main.boss_active and bool(main.enemy.get("resonance_started", false)), "second moon boss enters resonance phase at low HP")
+	_assert(main.boss_resonance_timer > 0.0, "second moon boss resonance feedback is visible briefly")
+	main.enemy_hp = 1
+	main.active_boss_saved_hp = 1
+	main._deal_damage(false)
+	_assert(not main.boss_active, "defeating second moon boss exits encounter")
+	_assert(main._has_item("第二月泪", 1), "second moon boss defeat grants unique tear drop")
+	_assert(int(main.dungeon_clears.get("second_moon_spring_preview", 0)) == 1, "second moon boss defeat records dungeon clear")
+	_assert(main.dungeon_feedback_title.contains("第二月泉"), "second moon boss victory uses dedicated feedback")
+	_assert(main._is_album_unlocked("stage_20_preview"), "stage 20 milestone unlocks album entry")
+	_assert(main._is_album_unlocked("second_moon_boss_clear"), "second moon boss defeat unlocks album entry")
+	_assert(main._is_title_unlocked("stage_20_pathfinder"), "stage 20 milestone unlocks pathfinder title")
+	_assert(main._is_title_unlocked("second_moon_clearer"), "second moon boss defeat unlocks boss title")
+	main._open_detail(main._loot_detail("第二月泪", int(main.inventory.get("第二月泪", 0))))
+	_assert(main.detail_primary_button.visible and main.detail_primary_button.text == "去觉醒", "second moon tear detail links to awakening")
+	main._on_detail_primary()
+	_assert(main.selected_tab == "growth", "second moon tear detail opens growth tab")
+	main.gold = 420
+	main.inventory["第二月泪"] = 1
+	main.inventory["月露结晶"] = 2
+	var damage_before_awaken: int = main._hero_damage_value()
+	main._open_detail(main._weapon_awaken_detail())
+	_assert(main.detail_primary_button.text == "觉醒", "weapon awakening detail allows upgrade when materials are ready")
+	main._on_detail_primary()
+	_assert(main.weapon_awaken_rank == 1, "weapon awakening consumes tear and increments rank")
+	_assert(main._hero_damage_value() > damage_before_awaken, "weapon awakening increases hero damage")
+	_assert(not main.inventory.has("第二月泪"), "weapon awakening consumes second moon tear")
+	_assert(main._is_album_unlocked("first_moon_awakening"), "first awakening unlocks album entry")
+	_assert(main._is_title_unlocked("moon_awakener"), "first awakening unlocks title")
+	main.gold = 360
+	main.materials = 12
+	main.inventory["第二月泪"] = 1
+	var quest_gold_before_awaken: int = main.gold
+	main._open_detail(main._talisman_awaken_detail())
+	_assert(main.detail_primary_button.text == "觉醒", "talisman awakening detail allows upgrade when materials are ready")
+	main._on_detail_primary()
+	_assert(main.talisman_awaken_rank == 1, "talisman awakening consumes tear and increments rank")
+	main.defeated = 4
+	main.claimed_quests = 0
+	main.gold = 0
+	main._claim_quest_reward()
+	_assert(main.gold > quest_gold_before_awaken / 20, "talisman awakening contributes quest reward gold")
+	main._open_detail(main._chapter_goal_detail("chapter_1_moon_camp"))
+	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "chapter goal detail shows reward artwork")
+	_assert(str(main.active_detail.get("sprite", "")) == "item_chapter1_crest", "chapter goal uses generated chapter crest artwork")
+	_assert(main.detail_description_label.text.contains("第一章告一段落"), "chapter goal main description is player-facing")
+	_assert(not main.detail_description_label.text.contains("完成：") and not main.detail_description_label.text.contains("奖励："), "chapter goal main description does not mix system progress")
+	_assert(main.detail_extra_container.visible and main.detail_extra_container.get_child_count() >= 6, "chapter goal detail separates progress reward and status sections")
+	_assert(main.detail_primary_button.text == "领取", "completed chapter goal can be claimed")
+	var chapter_gold_before: int = main.gold
+	main._on_detail_primary()
+	_assert(bool(main.chapter_claimed.get("chapter_1_moon_camp", false)), "chapter goal claim is recorded")
+	_assert(main.gold > chapter_gold_before and main.materials > 0, "chapter goal grants settlement reward")
+	_assert(main._has_item("第二月泪", 1), "chapter goal grants an extra second moon tear")
+	_assert(main._is_album_unlocked("chapter_1_clear"), "chapter goal unlocks chapter album entry")
+	_assert(main._is_title_unlocked("chapter_1_keeper"), "chapter goal unlocks chapter title")
+	main.stage = 24
+	main.camp_rank = 3
+	main.level = 34
+	main.training_rank = 22
+	main.weapon_rank = 4
+	main.talisman_rank = 4
+	main.equipped_weapon_rank = 4
+	main.equipped_talisman_rank = 4
+	main.gold = 1200
+	main.materials = 36
+	main.inventory["第二月泪"] = 2
+	main.inventory["月露结晶"] = 4
+	main.inventory["静月花瓣"] = 3
+	main._select_battle_area("quiet_moon_ridge")
+	_assert(main.selected_area_id == "quiet_moon_ridge", "stage 24 quiet moon ridge can be selected")
+	_assert(str(main.enemy.get("drop", "")) == "静月花瓣", "quiet moon ridge drops new quiet moon petal material")
+	main.weapon_awaken_rank = 1
+	main._open_detail(main._weapon_awaken_detail())
+	_assert(_node_text(main.detail_extra_container).contains("静月花瓣"), "weapon awakening rank 2 asks for quiet moon petals")
+	main._on_detail_primary()
+	_assert(main.weapon_awaken_rank == 2, "weapon awakening can progress to rank 2 with quiet moon petals")
+	_assert(not main.inventory.has("静月花瓣"), "weapon awakening rank 2 consumes quiet moon petals")
+	main.inventory["静月花瓣"] = 3
+	main._open_detail(main._dungeon_detail("quiet_moon_ridge_patrol"))
+	_assert(main.detail_primary_button.text == "挑战", "quiet moon ridge patrol detail allows challenge")
+	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "quiet moon ridge patrol detail uses generated petal artwork")
+	_assert(_node_text(main.detail_extra_container).contains("静月花瓣"), "quiet moon ridge patrol detail shows petal ticket and reward")
+	var quiet_attempts_before: int = int(main.dungeon_attempts.get("quiet_moon_ridge_patrol", 0))
+	main._on_detail_primary()
+	_assert(int(main.dungeon_attempts.get("quiet_moon_ridge_patrol", 0)) == quiet_attempts_before + 1, "quiet moon ridge patrol spends one attempt")
+	_assert(int(main.dungeon_clears.get("quiet_moon_ridge_patrol", 0)) == 1, "quiet moon ridge patrol records clear")
+	_assert(main._has_item("静月花瓣", 4) and main._has_item("第二月泪", 1), "quiet moon ridge patrol grants post chapter materials")
+	_assert(main._is_album_unlocked("quiet_moon_ridge"), "stage 24 unlocks quiet moon album entry")
+	_assert(main._is_album_unlocked("quiet_moon_patrol_clear"), "quiet moon patrol clear unlocks album entry")
+	main._open_detail(main._chapter_goal_detail("chapter_1_quiet_moon_epilogue"))
+	_assert(main.detail_primary_button.text == "领取", "quiet moon epilogue chapter goal can be claimed")
+	var epilogue_gold_before: int = main.gold
+	main._on_detail_primary()
+	_assert(bool(main.chapter_claimed.get("chapter_1_quiet_moon_epilogue", false)), "quiet moon epilogue claim is recorded")
+	_assert(main.gold > epilogue_gold_before and main._has_item("静月花瓣", 1), "quiet moon epilogue grants chapter reward")
+	_assert(main._is_album_unlocked("chapter_1_epilogue"), "quiet moon epilogue unlocks album entry")
+	_assert(main._is_title_unlocked("quiet_moon_keeper"), "quiet moon epilogue unlocks title")
+	main.weapon_awaken_rank = 0
+	main.talisman_awaken_rank = 0
 	main.stage = 10
 	main.camp_rank = 2
 	main.level = 24
@@ -146,8 +297,8 @@ func _run() -> void:
 	main.inventory.erase("月露结晶")
 	var trial_attempts_before: int = int(main.dungeon_attempts.get("moon_spring_trial", 0))
 	main._open_detail(main._dungeon_detail("moon_spring_trial"))
-	_assert(main.detail_primary_button.text == "缺钥匙", "moon spring trial detail blocks challenge without key")
-	_assert(main.detail_effect_label.text.contains("门票"), "moon spring trial detail shows entry ticket line")
+	_assert(main.detail_primary_button.text == "缺门票", "moon spring trial detail blocks challenge without ticket")
+	_assert(_node_text(main.detail_extra_container).contains("门票"), "moon spring trial detail shows entry ticket section")
 	main._hide_detail_overlay()
 	main._run_dungeon("moon_spring_trial")
 	_assert(int(main.dungeon_attempts.get("moon_spring_trial", 0)) == trial_attempts_before, "moon spring trial without key spends no attempt")
@@ -167,8 +318,8 @@ func _run() -> void:
 	_assert(main.boss_active and main.active_boss_timer < boss_timer_before, "boss encounter countdown decreases during battle")
 	main._open_detail(main._boss_detail("moss_moon_slime"))
 	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "boss detail popup shows boss artwork")
-	_assert(main.detail_effect_label.text.contains("击败奖励"), "boss detail shows defeat reward")
-	_assert(main.detail_effect_label.text.contains("失败安慰"), "boss detail shows failure consolation reward")
+	_assert(_node_text(main.detail_extra_container).contains("击败奖励"), "boss detail shows defeat reward section")
+	_assert(_node_text(main.detail_extra_container).contains("失败安慰"), "boss detail shows failure consolation reward section")
 	main._hide_detail_overlay()
 	main.enemy_hp = 1
 	main.active_boss_saved_hp = 1
@@ -201,6 +352,7 @@ func _run() -> void:
 	main._set_tab("companion")
 	await process_frame
 	_assert(main.content_scroll.custom_minimum_size.y >= 400.0, "companion tab expands scroll reading area")
+	_assert(main.secondary_nav_row.visible and main.secondary_nav_row.get_child_count() == 3, "companion tab shows frozen companion/title/album buttons")
 	for companion_id in main.DATA.companion_ids():
 		main._open_detail(main._companion_detail(companion_id))
 		_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "companion detail popup shows artwork for %s" % companion_id)
@@ -229,6 +381,11 @@ func _run() -> void:
 	main._on_detail_primary()
 	_assert(main.equipped_title_id == "cat_chosen", "title detail can equip title")
 	_assert(main.hero_label.text.contains("被猫选中的人"), "equipped title appears in top hero label")
+	main._open_detail(main._companion_selector_detail())
+	_assert(main.detail_overlay.visible, "battle companion selector popup opens")
+	_assert(main.detail_extra_container.visible and main.detail_extra_container.get_child_count() >= 4, "companion selector lists switch options")
+	main._select_companion_from_selector("nico")
+	_assert(main.companion_id == "nico", "companion selector can switch active companion")
 
 	main.gold = 0
 	main._deal_damage(true)
@@ -254,6 +411,8 @@ func _run() -> void:
 	main.talisman_rank = 1
 	main.equipped_weapon_rank = 1
 	main.equipped_talisman_rank = 1
+	main.equipment_inventory = {"weapon_1": 1, "talisman_1": 1}
+	main.loaded_equipment_inventory = true
 	main.gold = 0
 	main.materials = 0
 	main._claim_quest_reward()
@@ -262,15 +421,16 @@ func _run() -> void:
 	_assert(main.materials > 0, "quest reward grants materials")
 	main._open_detail(main._equipment_set_detail())
 	_assert(main.detail_overlay.visible, "equipment set detail popup opens")
-	_assert(main.detail_effect_label.text.contains("金币"), "equipment set detail shows set affix")
+	_assert(_node_text(main.detail_extra_container).contains("金币"), "equipment set detail shows set affix in sections")
 	_assert(main.detail_extra_container.visible and main.detail_extra_container.get_child_count() >= 2, "equipment set detail shows piece image guide")
 	main._hide_detail_overlay()
 	main.weapon_rank = 2
 	main.talisman_rank = 1
 	main.equipped_weapon_rank = 2
 	main.equipped_talisman_rank = 1
+	main.equipment_inventory = {"weapon_2": 1, "talisman_1": 1}
 	main._open_detail(main._equipment_set_detail(2))
-	_assert(main.detail_effect_label.text.contains("缺少护符 Lv.2"), "equipment set detail names the missing piece")
+	_assert(_node_text(main.detail_extra_container).contains("缺少护符 Lv.2"), "equipment set detail names the missing piece")
 	_assert(main.detail_extra_container.visible, "missing set still shows visual piece slots")
 	main._hide_detail_overlay()
 
@@ -281,23 +441,24 @@ func _run() -> void:
 	main.materials = 4
 	main._upgrade_talisman()
 	_assert(main.talisman_rank == 1, "talisman upgrade increments talisman rank")
-	_assert(main.equipped_talisman_rank == 1, "talisman upgrade auto-equips new talisman")
+	_assert(main.equipped_talisman_rank == 0, "talisman strengthen does not replace the worn talisman")
 	_assert(main.gold == 0, "talisman upgrade spends gold")
 	_assert(main.materials == 0, "talisman upgrade spends materials")
 	main.talisman_rank = 2
 	main.equipped_talisman_rank = 0
+	main.equipment_inventory = {"talisman_0": 1, "talisman_1": 1, "talisman_2": 1, "weapon_0": 1}
 	main._open_detail(main._talisman_detail(1))
 	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "talisman detail popup shows equipment artwork")
-	_assert(main.detail_effect_label.text.contains("升级预览"), "talisman detail shows upgrade preview")
+	_assert(_node_text(main.detail_extra_container).contains("强化"), "talisman detail shows strengthen section")
 	main._on_detail_primary()
 	_assert(main.equipped_talisman_rank == 1, "talisman detail can equip owned rank")
 	main.talisman_rank = 2
-	main.equipped_talisman_rank = 2
+	main.equipped_talisman_rank = 1
 	main.gold = 0
 	main.materials = 0
 	main._open_detail(main._talisman_detail(2))
 	main._on_detail_secondary()
-	_assert(main.talisman_rank == 1, "talisman detail can decompose highest rank")
+	_assert(main.talisman_rank == 2 and not main.equipment_inventory.has("talisman_2"), "talisman detail can decompose extra equipment without lowering slot strengthen")
 	_assert(main.gold > 0 and main.materials > 0, "talisman decompose returns resources")
 
 	main.defeated = 12
@@ -307,15 +468,16 @@ func _run() -> void:
 	main.inventory["苔影露珠"] = 2
 	main._upgrade_weapon()
 	_assert(main.weapon_rank == 1, "weapon upgrade increments weapon rank")
-	_assert(main.equipped_weapon_rank == 1, "weapon upgrade auto-equips new weapon")
+	_assert(main.equipped_weapon_rank == 0, "weapon strengthen does not replace the worn weapon")
 	_assert(main.gold == 0, "weapon upgrade spends gold")
 	_assert(not main.inventory.has("苔影露珠"), "weapon upgrade spends required item")
-	_assert(main.DATA.hero_damage(main.level, main.training_rank, main.equipped_weapon_rank) > main.DATA.hero_damage(main.level, main.training_rank, 0), "equipped weapon rank increases damage")
+	_assert(main._hero_damage_value() > main.DATA.hero_damage(main.level, main.training_rank, 0), "weapon slot strengthen increases damage")
 	main.weapon_rank = 2
 	main.equipped_weapon_rank = 0
+	main.equipment_inventory = {"weapon_0": 1, "weapon_1": 1, "weapon_2": 1, "talisman_0": 1}
 	main._open_detail(main._weapon_detail(1))
 	_assert(main.detail_image_rect.visible and main.detail_image_rect.texture != null, "weapon detail popup shows equipment artwork")
-	_assert(main.detail_effect_label.text.contains("升级预览"), "weapon detail shows upgrade preview")
+	_assert(_node_text(main.detail_extra_container).contains("强化"), "weapon detail shows strengthen section")
 	main._on_detail_primary()
 	_assert(main.equipped_weapon_rank == 1, "weapon detail can equip owned rank")
 	main._set_tab("growth")
@@ -328,6 +490,26 @@ func _run() -> void:
 	_assert(main.content_scroll.custom_minimum_size.y <= 140.0, "battle tab keeps scene-focused compact scroll area")
 	_assert(not main.enemy_name_label.visible and not main.enemy_hp_bar.visible, "battle enemy HP is moved out of the bottom panel")
 	_assert(main.scene_spacer.custom_minimum_size.y >= 360.0, "battle tab reserves more visible scene space")
+	_assert(main.sprite_textures.has("battle_area_map"), "battle tab loads generated linear map artwork")
+	main.stage = 10
+	main._select_battle_area("mushroom_grove")
+	_assert(main.selected_area_id == "mushroom_grove", "battle map can select idle area")
+	_assert(str(main.enemy.get("drop", "")) == "月光孢子", "selected idle area changes current drop")
+	main.stage = 21
+	main._select_battle_area("moonroot_corridor")
+	_assert(main.selected_area_id == "moonroot_corridor", "post-second-moon idle area can be selected")
+	_assert(str(main.enemy.get("drop", "")) == "月露结晶", "post-second-moon idle area feeds moon crystal loop")
+	main.stage = 1
+	main.selected_area_id = "camp_clearing"
+	main._select_battle_area("moon_spring_gate")
+	_assert(main.selected_area_id == "camp_clearing", "locked idle area falls back to unlocked default")
+	main._set_tab("inventory")
+	await process_frame
+	main.content_dirty = false
+	main.enemy_hp = 9999
+	main.enemy_max_hp = 9999
+	main._deal_damage(false)
+	_assert(not main.content_dirty, "non-lethal attack does not force inventory hover rows to rebuild")
 	main.talisman_rank = 2
 	main.equipped_talisman_rank = 2
 	main.equipped_weapon_rank = 2
@@ -335,16 +517,16 @@ func _run() -> void:
 	var dungeon_reward: Dictionary = main._dungeon_reward_preview("moon_mine")
 	_assert(int(dungeon_reward.get("materials", 0)) >= 8, "equipment set can preview dungeon reward")
 	main.weapon_rank = 2
-	main.equipped_weapon_rank = 2
+	main.equipped_weapon_rank = 1
 	main.gold = 0
 	main.inventory.clear()
 	main._open_detail(main._weapon_detail(2))
 	main._on_detail_secondary()
-	_assert(main.weapon_rank == 1, "weapon detail can decompose highest rank")
+	_assert(main.weapon_rank == 2 and not main.equipment_inventory.has("weapon_2"), "weapon detail can decompose extra equipment without lowering slot strengthen")
 	_assert(main.gold > 0 and main.inventory.size() > 0, "weapon decompose returns gold and item")
 
 	if failures.is_empty():
-		print("SMOKE PASS: inventory details, daily sign-in, daily tasks, dungeons, moon spring tickets, boss encounter/countdown/failure/reward, dungeon feedback, companion active/support, companion feeding, title equip, album progress, attack feedback, quest reward, and equipment equip/decompose")
+		print("SMOKE PASS: inventory details/categories, daily sign-in, daily tasks, chapter settlement/quiet moon epilogue, dungeons/equipment drops/stage 14 outpost/stage 20 second moon boss/stage 24 quiet moon patrol, second moon tear and quiet moon petal awakening, post-second-moon battle area, moon spring tickets, boss encounter/countdown/failure/reward, dungeon feedback/animation, companion active/support/selector, title equip, album progress, battle map area selection, attack feedback, quest reward, and equipment strengthen/equip/decompose")
 		quit(0)
 	else:
 		for failure in failures:

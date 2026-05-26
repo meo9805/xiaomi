@@ -1,0 +1,26 @@
+{
+  "source": "/Users/meo/.codex/generated_images/019e5cb2-e00f-7311-bfbb-448041d4346b/ig_0a13abd370e71d77016a15017a40248196bc04b9d12334a861.png",
+  "assets": {
+    "boss_second_moon_warden": {
+      "path": "assets/generated/bosses/boss_second_moon_warden.png",
+      "size": [
+        360,
+        331
+      ]
+    },
+    "item_second_moon_tear": {
+      "path": "assets/generated/items/item_second_moon_tear.png",
+      "size": [
+        164,
+        220
+      ]
+    },
+    "fx_moon_spring_slash": {
+      "path": "assets/generated/vfx/fx_moon_spring_slash.png",
+      "size": [
+        459,
+        385
+      ]
+    }
+  }
+}

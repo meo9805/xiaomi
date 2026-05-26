@@ -31,6 +31,79 @@ const ENEMIES := [
 	},
 ]
 
+const BATTLE_AREAS := [
+	{
+		"id": "camp_clearing",
+		"name": "营地外围",
+		"short": "营地",
+		"unlock_stage": 1,
+		"enemy_index": 0,
+		"drop": "苔影露珠",
+		"map_x": 0.08,
+		"map_y": 0.64,
+	},
+	{
+		"id": "moss_pond",
+		"name": "苔影水洼",
+		"short": "水洼",
+		"unlock_stage": 3,
+		"enemy_index": 0,
+		"drop": "苔影露珠",
+		"map_x": 0.30,
+		"map_y": 0.58,
+	},
+	{
+		"id": "mushroom_grove",
+		"name": "夜菇林",
+		"short": "夜菇",
+		"unlock_stage": 4,
+		"enemy_index": 1,
+		"drop": "月光孢子",
+		"map_x": 0.50,
+		"map_y": 0.52,
+	},
+	{
+		"id": "warm_root_hollow",
+		"name": "暖根洞",
+		"short": "暖根",
+		"unlock_stage": 7,
+		"enemy_index": 2,
+		"drop": "暖木碎片",
+		"map_x": 0.70,
+		"map_y": 0.58,
+	},
+	{
+		"id": "moon_spring_gate",
+		"name": "月泉门",
+		"short": "月泉",
+		"unlock_stage": 10,
+		"enemy_index": 1,
+		"drop": "月泉钥匙",
+		"map_x": 0.91,
+		"map_y": 0.60,
+	},
+	{
+		"id": "moonroot_corridor",
+		"name": "月根回廊",
+		"short": "月根",
+		"unlock_stage": 21,
+		"enemy_index": 2,
+		"drop": "月露结晶",
+		"map_x": 0.84,
+		"map_y": 0.42,
+	},
+	{
+		"id": "quiet_moon_ridge",
+		"name": "静月坡",
+		"short": "静月",
+		"unlock_stage": 24,
+		"enemy_index": 1,
+		"drop": "静月花瓣",
+		"map_x": 0.92,
+		"map_y": 0.30,
+	},
+]
+
 const LOOT_DESCRIPTIONS := {
 	"苔影露珠": "湿润的绿色露珠，可用来给营地草药盆充能。",
 	"月光孢子": "带一点粉紫月光的孢子，适合做夜间药剂。",
@@ -39,6 +112,8 @@ const LOOT_DESCRIPTIONS := {
 	"月露结晶": "像月光凝成的小石头，后续可用于稀有强化。",
 	"月泉钥匙": "可以打开月泉试炼入口的旧钥匙，是挑战月泉试炼的门票。",
 	"苔月露核": "苔月巨史莱姆体内凝出来的小核心，带着一点月泉的亮光。",
+	"第二月泪": "第二口月泉守卫掉落的弯月泪晶，里面有更深处森林的回声。",
+	"静月花瓣": "静月坡上落下的淡紫花瓣，边缘像一小片弯月。",
 }
 
 const LOOT_USES := {
@@ -49,6 +124,8 @@ const LOOT_USES := {
 	"月露结晶": "后续稀有装备、Boss 试炼和图鉴解锁材料。",
 	"月泉钥匙": "用于进入月泉试炼；试炼通关后可带回月露结晶和营地材料。",
 	"苔月露核": "第 10 区小 Boss 的专属掉落，后续可用于武器觉醒和 Boss 图鉴。",
+	"第二月泪": "第 20 区 Boss 的专属掉落，用于第一章后段的武器和护符月泉觉醒。",
+	"静月花瓣": "第 24 区后的新循环材料，用于静月坡巡礼和更高阶月泉觉醒。",
 }
 
 const LOOT_SPRITES := {
@@ -59,8 +136,11 @@ const LOOT_SPRITES := {
 	"月露结晶": "item_moon_crystal",
 	"月泉钥匙": "item_moon_key",
 	"苔月露核": "item_moss_moon_core",
+	"第二月泪": "item_second_moon_tear",
+	"静月花瓣": "item_quiet_moon_petal",
 	"营地材料": "item_camp_materials",
 	"金币": "icon_coins_large",
+	"第一章徽章": "item_chapter1_crest",
 }
 
 const PERSONAL_EVENT_LOGS := [
@@ -234,29 +314,31 @@ const EQUIPMENT_SETS := [
 	},
 	{
 		"name": "苔光套",
-		"short_effect": "任务金币 +10%",
-		"effect": "2 件套：任务领奖金币 +10%。",
+		"short_effect": "任务金币 +12%",
+		"effect": "2 件套：任务领奖金币 +12%。",
 		"description": "苔光贴在剑柄和护符上，提醒小咪不要漏掉领奖。",
 	},
 	{
 		"name": "月孢套",
-		"short_effect": "怪物掉落率 +5%",
-		"effect": "2 件套：怪物掉落率 +5%。",
+		"short_effect": "怪物掉落率 +7%",
+		"effect": "2 件套：怪物掉落率 +7%。",
 		"description": "月光孢子会轻轻发亮，适合寻找小怪藏起来的材料。",
 	},
 	{
 		"name": "暖木套",
-		"short_effect": "副本金材 +10%",
-		"effect": "2 件套：副本金币和营地材料 +10%。",
+		"short_effect": "副本金材 +12%",
+		"effect": "2 件套：副本金币和营地材料 +12%。",
 		"description": "暖木纹路让每日小探险更稳定，带回来的东西也更扎实。",
 	},
 	{
 		"name": "月森守护套",
-		"short_effect": "攻击 +8，任务/副本 +15%",
-		"effect": "2 件套：攻击 +8；任务金币和副本金材 +15%。",
+		"short_effect": "攻击 +10，任务/副本 +18%",
+		"effect": "2 件套：攻击 +10；任务金币和副本金材 +18%。",
 		"description": "月森外围的阶段性毕业装备，适合准备挑战更大的敌人。",
 	},
 ]
+
+const EQUIPMENT_AWAKEN_MAX_RANK := 3
 
 const DAILY_REWARDS := [
 	{
@@ -345,6 +427,48 @@ const DAILY_TASKS := [
 	},
 ]
 
+const CHAPTER_GOALS := {
+	"chapter_1_moon_camp": {
+		"name": "第一章 · 月森营地",
+		"type": "章节结算",
+		"sprite": "item_chapter1_crest",
+		"description": "第二口月泉安静下来，营地的第一章告一段落。新的月根路线已经在森林深处亮起。",
+		"goals": [
+			{"id": "stage_20", "label": "推进到第 20 区"},
+			{"id": "second_moon_clear", "label": "击败第二月泉守望者"},
+			{"id": "moon_awakening", "label": "完成任意 1 次月泉觉醒"},
+		],
+		"reward": {
+			"gold": 1600,
+			"materials": 36,
+			"items": {"月露结晶": 3, "第二月泪": 1},
+			"equipment": {"weapon_4": 1, "talisman_4": 1},
+		},
+		"claim_feedback": "月根路线已经接上，静月坡开始掉落新的花瓣材料。",
+	},
+	"chapter_1_quiet_moon_epilogue": {
+		"name": "第一章 · 静月尾声",
+		"type": "章节尾声",
+		"sprite": "item_quiet_moon_petal",
+		"description": "静月坡的花瓣被收进营地手册，第一章真正进入尾声。月森深处还有路，但营地已经不再只是临时落脚点。",
+		"goals": [
+			{"id": "chapter_1_claimed", "label": "领取第一章结算"},
+			{"id": "stage_24", "label": "推进到第 24 区静月坡"},
+			{"id": "quiet_moon_patrol_clear", "label": "完成 1 次静月坡巡礼"},
+			{"id": "moon_awakening_2", "label": "完成任意 1 条月泉觉醒 Lv.2"},
+		],
+		"reward": {
+			"gold": 2400,
+			"materials": 48,
+			"items": {"静月花瓣": 4, "月露结晶": 4, "第二月泪": 1},
+			"equipment": {"weapon_4": 1, "talisman_4": 1},
+		},
+		"claim_feedback": "静月尾声已点亮，后续可以继续扩展第二章入口或更深的月森路线。",
+	},
+}
+
+const CHAPTER_GOAL_ORDER := ["chapter_1_moon_camp", "chapter_1_quiet_moon_epilogue"]
+
 const DUNGEONS := {
 	"gold_cave": {
 		"name": "亮晶晶洞穴",
@@ -356,7 +480,7 @@ const DUNGEONS := {
 		"power_per_stage": 2,
 		"sprite": "icon_coins_large",
 		"description": "小咪闻到亮晶晶的味道。每天可以进去扒拉几次集中金币。",
-		"reward": {"gold": 120, "materials": 0, "items": {}},
+		"reward": {"gold": 120, "materials": 0, "items": {}, "equipment": {"weapon_1": 1}},
 		"reward_gold_per_stage": 12,
 		"reward_materials_per_stage": 0,
 	},
@@ -370,7 +494,7 @@ const DUNGEONS := {
 		"power_per_stage": 3,
 		"sprite": "item_camp_materials",
 		"description": "营地后面的浅矿道。适合每天捡一点修补营地用的材料。",
-		"reward": {"gold": 30, "materials": 8, "items": {}},
+		"reward": {"gold": 30, "materials": 8, "items": {}, "equipment": {"talisman_1": 1}},
 		"reward_gold_per_stage": 4,
 		"reward_materials_per_stage": 1,
 	},
@@ -384,7 +508,7 @@ const DUNGEONS := {
 		"power_per_stage": 4,
 		"sprite": "item_moon_spore",
 		"description": "夜巡蘑菇的小仓库。能定向拿到武器强化需要的怪物材料。",
-		"reward": {"gold": 55, "materials": 2, "items": {"月光孢子": 3, "苔影露珠": 2}},
+		"reward": {"gold": 55, "materials": 2, "items": {"月光孢子": 3, "苔影露珠": 2}, "equipment": {"weapon_2": 1, "talisman_2": 1}},
 		"reward_gold_per_stage": 6,
 		"reward_materials_per_stage": 0,
 	},
@@ -401,13 +525,60 @@ const DUNGEONS := {
 		"boss_id": "moss_moon_slime",
 		"sprite": "item_moon_key",
 		"description": "营地北侧的月泉入口。需要月泉钥匙开启，适合每天打一场小试炼。",
-		"reward": {"gold": 180, "materials": 6, "items": {"月露结晶": 1, "苔月露核": 1}},
+		"reward": {"gold": 180, "materials": 6, "items": {"月露结晶": 1, "苔月露核": 1}, "equipment": {"weapon_3": 1, "talisman_3": 1}},
 		"reward_gold_per_stage": 10,
+		"reward_materials_per_stage": 1,
+	},
+	"moon_guard_outpost": {
+		"name": "月森前哨",
+		"type": "装备前哨",
+		"unlock_stage": 14,
+		"unlock_camp": 2,
+		"daily_attempts": 1,
+		"base_power": 96,
+		"power_per_stage": 5,
+		"sprite": "weapon_moon_guardian_blade",
+		"description": "第 10 区之后的稳定目标。守在月森更深处的小前哨，会掉落阶段毕业装备件。",
+		"reward": {"gold": 110, "materials": 4, "items": {"暖木碎片": 4, "月露结晶": 1}, "equipment": {"weapon_4": 1, "talisman_4": 1}},
+		"reward_gold_per_stage": 8,
+		"reward_materials_per_stage": 1,
+	},
+	"second_moon_spring_preview": {
+		"name": "第二口月泉",
+		"type": "第 20 区 Boss 试炼",
+		"unlock_stage": 20,
+		"unlock_camp": 3,
+		"daily_attempts": 1,
+		"base_power": 150,
+		"power_per_stage": 6,
+		"requires_item": "月露结晶",
+		"requires_item_amount": 2,
+		"boss_id": "second_moon_warden",
+		"sprite": "boss_second_moon_warden",
+		"description": "第 20 区的第二口月泉已经醒来。投入月露结晶后，森林根须会聚成月泉守望者。",
+		"reward": {"gold": 260, "materials": 8, "items": {"月露结晶": 2, "第二月泪": 1}, "equipment": {"weapon_4": 1, "talisman_4": 1}},
+		"reward_gold_per_stage": 10,
+		"reward_materials_per_stage": 1,
+	},
+	"quiet_moon_ridge_patrol": {
+		"name": "静月坡巡礼",
+		"type": "后段材料副本",
+		"unlock_stage": 24,
+		"unlock_camp": 3,
+		"daily_attempts": 1,
+		"base_power": 188,
+		"power_per_stage": 7,
+		"requires_item": "静月花瓣",
+		"requires_item_amount": 3,
+		"sprite": "item_quiet_moon_petal",
+		"description": "第二月泉平息后的第一段后续巡礼。小咪会沿着静月坡把花瓣、月露结晶和遗落装备一起带回来。",
+		"reward": {"gold": 340, "materials": 10, "items": {"静月花瓣": 4, "月露结晶": 3, "第二月泪": 1}, "equipment": {"weapon_4": 1, "talisman_4": 1}},
+		"reward_gold_per_stage": 12,
 		"reward_materials_per_stage": 1,
 	},
 }
 
-const DUNGEON_ORDER := ["gold_cave", "moon_mine", "spore_nest", "moon_spring_trial"]
+const DUNGEON_ORDER := ["gold_cave", "moon_mine", "spore_nest", "moon_spring_trial", "moon_guard_outpost", "second_moon_spring_preview", "quiet_moon_ridge_patrol"]
 
 const BOSSES := {
 	"moss_moon_slime": {
@@ -423,6 +594,21 @@ const BOSSES := {
 		"fail_reward": {"gold": 40, "materials": 2, "items": {"月光孢子": 1}},
 		"draw_height": 118,
 		"draw_y_offset": -88,
+	},
+	"second_moon_warden": {
+		"name": "第二月泉守望者",
+		"type": "第 20 区 Boss",
+		"hp": 1180,
+		"xp": 180,
+		"sprite": "boss_second_moon_warden",
+		"drop": "第二月泪",
+		"attack_fx": "fx_moon_spring_slash",
+		"description": "第二口月泉旁的根须守卫，胸口嵌着弯月晶核，动作很慢，但每一次挥击都带着月泉的回声。",
+		"hint": "这是第一章后段目标。建议先穿戴月森守护套，补训练和攻击伙伴，再消耗月露结晶挑战。",
+		"time_limit": 130,
+		"fail_reward": {"gold": 90, "materials": 4, "items": {"月露结晶": 1}},
+		"draw_height": 142,
+		"draw_y_offset": 42,
 	},
 }
 
@@ -518,6 +704,55 @@ const ALBUM_ENTRIES := [
 		"unlock": "击败苔月巨史莱姆 1 次",
 		"description": "它倒下的时候，月泉像被轻轻搅了一下。",
 	},
+	{
+		"id": "stage_20_preview",
+		"title": "第二口月泉的回声",
+		"type": "区域",
+		"unlock": "推进到第 20 区",
+		"description": "森林深处传来第二口月泉的回声，守望者已经醒来。",
+	},
+	{
+		"id": "second_moon_boss_clear",
+		"title": "第二月泉守望者倒下",
+		"type": "Boss",
+		"unlock": "击败第二月泉守望者 1 次",
+		"description": "第二口月泉安静下来，弯月泪晶落进了背包。",
+	},
+	{
+		"id": "first_moon_awakening",
+		"title": "第一道月泉觉醒",
+		"type": "装备",
+		"unlock": "完成任意 1 次装备月泉觉醒",
+		"description": "第二月泪不再只是收藏品，它开始改变武器和护符的月光回路。",
+	},
+	{
+		"id": "chapter_1_clear",
+		"title": "第一章收束",
+		"type": "章节",
+		"unlock": "完成第一章 · 月森营地结算目标",
+		"description": "第二口月泉安静下来，营地终于有了进入下一段森林的理由。",
+	},
+	{
+		"id": "quiet_moon_ridge",
+		"title": "静月坡的第一片花瓣",
+		"type": "区域",
+		"unlock": "推进到第 24 区",
+		"description": "静月坡的花瓣不像普通材料，更像森林留下的路标。",
+	},
+	{
+		"id": "quiet_moon_patrol_clear",
+		"title": "静月坡巡礼完成",
+		"type": "副本",
+		"unlock": "完成静月坡巡礼 1 次",
+		"description": "第二月泉之后的第一段日常目标被接上，营地开始稳定收集静月花瓣。",
+	},
+	{
+		"id": "chapter_1_epilogue",
+		"title": "静月尾声",
+		"type": "章节",
+		"unlock": "完成第一章 · 静月尾声",
+		"description": "第一章不只是打倒 Boss，还包括把后续路线真正接回营地。",
+	},
 ]
 
 const PLAYER_TITLES := [
@@ -577,6 +812,46 @@ const PLAYER_TITLES := [
 		"description": "第一个真正的大目标已经被你和小咪打倒。",
 		"sprite": "item_moss_moon_core",
 	},
+	{
+		"id": "stage_20_pathfinder",
+		"name": "第二月泉探路者",
+		"type": "区域称号",
+		"unlock": "推进到第 20 区",
+		"description": "已经走到第一章后段，第二口月泉的守望者就在前面。",
+		"sprite": "item_moon_crystal",
+	},
+	{
+		"id": "second_moon_clearer",
+		"name": "第二月泉破阵者",
+		"type": "Boss 称号",
+		"unlock": "击败第二月泉守望者 1 次",
+		"description": "击败第 20 区 Boss 后获得的称号，代表第一章后段已经被打开。",
+		"sprite": "item_second_moon_tear",
+	},
+	{
+		"id": "moon_awakener",
+		"name": "月泪觉醒者",
+		"type": "装备称号",
+		"unlock": "完成任意 1 次装备月泉觉醒",
+		"description": "把第二月泪真正用进装备回路的人，第一章后段成长从这里开始。",
+		"sprite": "item_second_moon_tear",
+	},
+	{
+		"id": "chapter_1_keeper",
+		"name": "月森第一章守夜人",
+		"type": "章节称号",
+		"unlock": "完成第一章 · 月森营地结算目标",
+		"description": "守住营地、打通第二口月泉，并准备继续往森林深处走的人。",
+		"sprite": "item_chapter1_crest",
+	},
+	{
+		"id": "quiet_moon_keeper",
+		"name": "静月尾声记录者",
+		"type": "章节称号",
+		"unlock": "完成第一章 · 静月尾声",
+		"description": "不是只打过 Boss，而是把静月坡的后续巡礼也记录进营地的人。",
+		"sprite": "item_quiet_moon_petal",
+	},
 ]
 
 static func enemy_for_stage(stage: int) -> Dictionary:
@@ -587,6 +862,41 @@ static func enemy_for_stage(stage: int) -> Dictionary:
 	base["xp"] = int(round(float(base["xp"]) * (1.0 + float(stage - 1) * 0.12)))
 	base["gold"] = int(round(float(base["gold"]) * (1.0 + float(stage - 1) * 0.10)))
 	return base
+
+static func enemy_for_area(area_id: String, stage: int) -> Dictionary:
+	var area := battle_area(area_id)
+	if area.is_empty():
+		return enemy_for_stage(stage)
+	var enemy_index := clampi(int(area.get("enemy_index", 0)), 0, ENEMIES.size() - 1)
+	var effective_stage := maxi(stage, int(area.get("unlock_stage", 1)))
+	var base: Dictionary = ENEMIES[enemy_index].duplicate(true)
+	var cycle: int = int((effective_stage - 1) / maxi(1, ENEMIES.size()))
+	var scale: float = 1.0 + float(cycle) * 0.35 + float(effective_stage - 1) * 0.08
+	base["hp"] = int(round(float(base["hp"]) * scale))
+	base["xp"] = int(round(float(base["xp"]) * (1.0 + float(effective_stage - 1) * 0.12)))
+	base["gold"] = int(round(float(base["gold"]) * (1.0 + float(effective_stage - 1) * 0.10)))
+	base["drop"] = str(area.get("drop", base.get("drop", "苔影露珠")))
+	base["area_id"] = area_id
+	base["area_name"] = str(area.get("name", "营地外围"))
+	return base
+
+static func battle_area(area_id: String) -> Dictionary:
+	for area in BATTLE_AREAS:
+		if str(area.get("id", "")) == area_id:
+			return Dictionary(area).duplicate(true)
+	return {}
+
+static func battle_area_exists(area_id: String) -> bool:
+	return not battle_area(area_id).is_empty()
+
+static func battle_areas() -> Array[Dictionary]:
+	var areas: Array[Dictionary] = []
+	for area in BATTLE_AREAS:
+		areas.append(Dictionary(area).duplicate(true))
+	return areas
+
+static func default_battle_area_id() -> String:
+	return str(BATTLE_AREAS[0].get("id", "camp_clearing"))
 
 static func xp_to_next(level: int) -> int:
 	return int(24 + pow(float(level), 1.5) * 16.0)
@@ -620,6 +930,37 @@ static func weapon_upgrade_cost(weapon_rank: int) -> Dictionary:
 		"item": items[weapon_rank % items.size()],
 		"amount": 2 + weapon_rank,
 	}
+
+static func equipment_awaken_max_rank() -> int:
+	return EQUIPMENT_AWAKEN_MAX_RANK
+
+static func weapon_awaken_cost(awaken_rank: int) -> Dictionary:
+	return {
+		"gold": 420 + awaken_rank * 180,
+		"tear": 1 + awaken_rank,
+		"crystal": 2 + awaken_rank,
+		"petal": 0 if awaken_rank <= 0 else 1 + awaken_rank * 2,
+	}
+
+static func talisman_awaken_cost(awaken_rank: int) -> Dictionary:
+	return {
+		"gold": 360 + awaken_rank * 160,
+		"tear": 1 + awaken_rank,
+		"materials": 12 + awaken_rank * 6,
+		"petal": 0 if awaken_rank <= 0 else 1 + awaken_rank * 2,
+	}
+
+static func weapon_awaken_attack_bonus(awaken_rank: int) -> int:
+	return clampi(awaken_rank, 0, EQUIPMENT_AWAKEN_MAX_RANK) * 6
+
+static func talisman_awaken_patrol_bonus(awaken_rank: int) -> int:
+	return clampi(awaken_rank, 0, EQUIPMENT_AWAKEN_MAX_RANK) * 2
+
+static func talisman_awaken_quest_bonus(awaken_rank: int) -> int:
+	return clampi(awaken_rank, 0, EQUIPMENT_AWAKEN_MAX_RANK) * 8
+
+static func awaken_name(slot: String) -> String:
+	return "月泉护符回响" if slot == "talisman" else "月泉刃痕"
 
 static func talisman_name(talisman_rank: int) -> String:
 	if talisman_rank < TALISMAN_NAMES.size():
@@ -710,6 +1051,53 @@ static func talisman_decompose_reward(talisman_rank: int) -> Dictionary:
 		"materials": maxi(1, int(float(int(spent["materials"]) + 1) * 0.5)),
 	}
 
+static func equipment_id(slot: String, rank: int) -> String:
+	return "%s_%d" % [slot, clampi(rank, 0, EQUIPMENT_SETS.size() - 1)]
+
+static func equipment_slot(equipment_id: String) -> String:
+	return equipment_id.get_slice("_", 0)
+
+static func equipment_rank(equipment_id: String) -> int:
+	return clampi(int(equipment_id.get_slice("_", 1)), 0, EQUIPMENT_SETS.size() - 1)
+
+static func equipment_name(equipment_id: String) -> String:
+	var slot := equipment_slot(equipment_id)
+	var rank := equipment_rank(equipment_id)
+	if slot == "talisman":
+		return talisman_name(rank)
+	return weapon_name(rank)
+
+static func equipment_type_name(equipment_id: String) -> String:
+	return "护符" if equipment_slot(equipment_id) == "talisman" else "武器"
+
+static func equipment_sprite(equipment_id: String) -> String:
+	var slot := equipment_slot(equipment_id)
+	var rank := equipment_rank(equipment_id)
+	if slot == "talisman":
+		return talisman_sprite(rank)
+	return weapon_sprite(rank)
+
+static func equipment_description(equipment_id: String) -> String:
+	var slot := equipment_slot(equipment_id)
+	var rank := equipment_rank(equipment_id)
+	if slot == "talisman":
+		return talisman_description(rank)
+	return weapon_description(rank)
+
+static func equipment_effect(equipment_id: String) -> String:
+	var slot := equipment_slot(equipment_id)
+	var rank := equipment_rank(equipment_id)
+	if slot == "talisman":
+		return talisman_effect(rank)
+	return weapon_effect(rank)
+
+static func equipment_decompose_reward(equipment_id: String) -> Dictionary:
+	var slot := equipment_slot(equipment_id)
+	var rank := equipment_rank(equipment_id)
+	if slot == "talisman":
+		return talisman_decompose_reward(maxi(1, rank))
+	return weapon_decompose_reward(maxi(1, rank))
+
 static func personal_event_log() -> String:
 	if PERSONAL_EVENT_LOGS.is_empty():
 		return ""
@@ -757,6 +1145,15 @@ static func daily_tasks() -> Array[Dictionary]:
 	for task in DAILY_TASKS:
 		tasks.append(Dictionary(task).duplicate(true))
 	return tasks
+
+static func chapter_goal(goal_id: String) -> Dictionary:
+	return Dictionary(CHAPTER_GOALS.get(goal_id, {})).duplicate(true)
+
+static func chapter_goal_ids() -> Array[String]:
+	var ids: Array[String] = []
+	for goal_id in CHAPTER_GOAL_ORDER:
+		ids.append(str(goal_id))
+	return ids
 
 static func dungeon(dungeon_id: String) -> Dictionary:
 	return Dictionary(DUNGEONS.get(dungeon_id, {})).duplicate(true)

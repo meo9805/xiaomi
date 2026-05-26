@@ -15,6 +15,7 @@ ASSET_DIRS = [
     ROOT / "assets/generated/items",
     ROOT / "assets/generated/bosses",
     ROOT / "assets/generated/vfx",
+    ROOT / "assets/generated/ui",
 ]
 MAX_SUSPICIOUS_WHITE_EDGE_PIXELS = 50
 MAX_SUSPICIOUS_CHROMA_EDGE_PIXELS = 12
@@ -22,6 +23,10 @@ ASSET_EDGE_LIMITS = {
     # The attack sprite has a cream moonlit sword arc that legitimately touches
     # transparency; keep it checked, but allow more bright edge pixels.
     "hero_attack.png": 80,
+    # This boss has small moon-crystal highlights along antlers and moss edges.
+    # The dedicated processing script tints pale edges into the project palette;
+    # keep the asset checked without treating intentional highlights as residue.
+    "boss_second_moon_warden.png": 120,
 }
 
 

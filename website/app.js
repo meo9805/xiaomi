@@ -8,6 +8,11 @@ const assets = {
     slime: "../assets/generated/crops/enemy_moss_slime.png",
     mushroom: "../assets/generated/crops/enemy_mushroom.png",
     root: "../assets/generated/crops/enemy_root_sprout.png",
+    warden: "../assets/generated/bosses/boss_second_moon_warden.png",
+  },
+  vfx: {
+    attack: "../assets/generated/vfx/fx_attack_slash.png",
+    moonSlash: "../assets/generated/vfx/fx_moon_spring_slash.png",
   },
 };
 
@@ -80,24 +85,24 @@ const loopData = {
   },
   power: {
     tag: "02 / 战力成长",
-    title: "训练、武器、护符，把小提升做得看得见。",
-    desc: "数值不复杂，但每次升级都有材料缺口、套装提示和下一步目标。",
-    image: "../assets/generated/items/weapon_warmwood_longsword.png",
-    meta: ["攻击 +8", "套装激活"],
+    title: "部位强化之后，第二月泪会打开觉醒。",
+    desc: "武器觉醒提高攻击，护符觉醒提高巡逻、离线和任务金币收益；第 20 区之后还会继续接到静月坡。",
+    image: "../assets/generated/items/item_second_moon_tear.png",
+    meta: ["月泉觉醒", "攻击 / 收益"],
   },
   bag: {
     tag: "03 / 背包掉落",
-    title: "每个物品都有图、用途和一句能记住的话。",
-    desc: "金币、月光孢子、小鱼干、月泉钥匙都会进入图鉴和详情弹窗，而不是只躺在数字里。",
-    image: "../assets/generated/items/item_dried_fish.png",
-    meta: ["小鱼干", "伙伴零食"],
+    title: "装备件、第二月泪、静月花瓣，都有自己的去处。",
+    desc: "副本会掉落真实武器/护符装备件；第二月泪进入觉醒，静月花瓣进入第一章尾声。",
+    image: "../assets/generated/items/item_quiet_moon_petal.png",
+    meta: ["静月尾声", "图鉴点亮"],
   },
   dungeon: {
     tag: "04 / 每日副本",
-    title: "亮晶晶洞穴、月露矿道、孢子巢穴。",
-    desc: "副本是每天 3 到 8 分钟回来的理由：定向拿金币、材料和后续 Boss 门票。",
-    image: "../assets/generated/items/item_moon_crystal.png",
-    meta: ["3 次挑战", "战力检测"],
+    title: "从亮晶晶洞穴，一路接到静月坡。",
+    desc: "七个副本/试炼串起金币、材料、装备、门票、Boss、静月巡礼和第一章结算，不再只是散点奖励。",
+    image: "../assets/generated/bosses/boss_second_moon_warden.png",
+    meta: ["7 个入口", "第 24 区尾声"],
   },
   friend: {
     tag: "05 / 伙伴营地",
@@ -133,6 +138,21 @@ const lootData = {
     type: "门票",
     title: "可以打开月泉试炼入口的旧钥匙。",
     desc: "当前先作为后续 Boss 门票储备，也为月泉试炼留下入口。",
+  },
+  secondMoon: {
+    type: "Boss 掉落",
+    title: "第二口月泉安静下来时，弯月泪晶落进了背包。",
+    desc: "用于第一章后段的武器和护符月泉觉醒，也会点亮专属相册和称号。",
+  },
+  crest: {
+    type: "章节徽章",
+    title: "第一章收束时，月森营地把这枚徽章留给你。",
+    desc: "完成第 20 区、击败第二月泉守望者并进行任意月泉觉醒后领取。",
+  },
+  petal: {
+    type: "后段材料",
+    title: "静月坡落下的一小片淡紫花瓣，像森林留下的路标。",
+    desc: "完成静月坡巡礼后进入背包、图鉴和章节尾声，是第一章后段继续向外延伸的材料。",
   },
 };
 
@@ -276,6 +296,7 @@ function initBattle() {
     { name: "苔影史莱姆", hp: 28, sprite: assets.enemies.slime, drop: "苔影露珠", gold: 7, xp: 8 },
     { name: "夜巡蘑菇", hp: 38, sprite: assets.enemies.mushroom, drop: "月光孢子", gold: 10, xp: 11 },
     { name: "树根小怪", hp: 52, sprite: assets.enemies.root, drop: "暖木碎片", gold: 14, xp: 15 },
+    { name: "第二月泉守望者", hp: 96, sprite: assets.enemies.warden, drop: "第二月泪", gold: 42, xp: 40, boss: true },
   ];
 
   const state = { enemyIndex: 0, hp: enemies[0].hp, gold: 544, snacks: 20 };
@@ -301,6 +322,8 @@ function initBattle() {
     enemyName.textContent = enemy.name;
     enemyHp.textContent = `${Math.max(0, state.hp)} / ${enemy.hp}`;
     target.src = enemy.sprite;
+    target.classList.toggle("boss-target", Boolean(enemy.boss));
+    slash.classList.toggle("moon-slash", Boolean(enemy.boss));
     enemyBar.style.width = `${Math.max(0, (state.hp / enemy.hp) * 100)}%`;
     goldCount.textContent = String(state.gold);
     snackCount.textContent = String(state.snacks);
@@ -331,10 +354,14 @@ function initBattle() {
 
     if (state.hp <= 0) {
       state.gold += enemy.gold;
-      log.textContent = `击败${enemy.name}，获得 ${enemy.gold} 金币、${enemy.xp} 经验和 1 个${enemy.drop}。`;
+      log.textContent = enemy.boss
+        ? `击败${enemy.name}，第二月泪亮了一下：金币 +${enemy.gold}，经验 +${enemy.xp}。`
+        : `击败${enemy.name}，获得 ${enemy.gold} 金币、${enemy.xp} 经验和 1 个${enemy.drop}。`;
       window.setTimeout(nextEnemy, 520);
     } else {
-      log.textContent = `小咪造成 ${damage} 点伤害，${enemy.name}还在努力站稳。`;
+      log.textContent = enemy.boss
+        ? `月泉剑光擦过根须，小咪造成 ${damage} 点伤害，守望者正在共鸣。`
+        : `小咪造成 ${damage} 点伤害，${enemy.name}还在努力站稳。`;
       update();
     }
   };
@@ -471,7 +498,9 @@ function initPlayableGame() {
 
 function initTilt() {
   if (window.matchMedia("(pointer: coarse)").matches) return;
-  const cards = $$(".moon-card, .game-card, .play-console, .loop-panel, .companion-showcase, .loot-card, .road-card");
+  const cards = $$(
+    ".moon-card, .game-card, .boss-showcase, .chapter-rewards, .play-console, .loop-panel, .companion-showcase, .loot-card, .road-card"
+  );
   cards.forEach((card) => {
     card.classList.add("tilt");
     card.addEventListener("pointermove", (event) => {

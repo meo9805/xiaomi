@@ -533,6 +533,8 @@ img:not(.phone-shell img) {
 .split-heading,
 .play-grid,
 .camp-grid,
+.chapter-grid,
+.chapter-milestones,
 .loop-tabs,
 .loop-panel,
 .companion-showcase,
@@ -588,6 +590,9 @@ img:not(.phone-shell img) {
 .play-console,
 .game-card,
 .phone-preview,
+.boss-showcase,
+.chapter-rewards,
+.chapter-milestones div,
 .loop-panel,
 .companion-showcase,
 .loot-detail,
@@ -767,6 +772,165 @@ img:not(.phone-shell img) {
   color: var(--lavender);
 }
 
+.chapter-section {
+  background:
+    linear-gradient(180deg, rgba(255, 181, 192, 0.08), rgba(93, 183, 255, 0.06)),
+    var(--night);
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.boss-showcase {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.62fr) minmax(0, 1fr);
+  gap: 24px;
+  min-height: 390px;
+  padding: 26px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(93, 183, 255, 0.12), rgba(255, 181, 192, 0.08)),
+    rgba(25, 24, 47, 0.94);
+}
+
+.boss-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 330px;
+  background:
+    radial-gradient(circle at 50% 62%, rgba(93, 183, 255, 0.26), transparent 44%),
+    linear-gradient(180deg, rgba(8, 8, 22, 0.36), rgba(8, 8, 22, 0.86)),
+    url("assets/generated/moon-camp-background.png") center/cover;
+  border: 3px solid var(--line);
+  overflow: hidden;
+}
+
+.boss-image {
+  position: relative;
+  z-index: 2;
+  width: min(82%, 280px);
+  filter: drop-shadow(0 14px 0 rgba(0, 0, 0, 0.52));
+  animation: bossPulse 2.4s steps(3, end) infinite;
+}
+
+.boss-fx {
+  position: absolute;
+  z-index: 1;
+  width: min(92%, 340px);
+  opacity: 0.56;
+  transform: rotate(-14deg);
+  filter: drop-shadow(0 0 18px rgba(93, 183, 255, 0.35));
+}
+
+@keyframes bossPulse {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.boss-copy {
+  align-self: center;
+}
+
+.chip.danger {
+  background: var(--pink);
+}
+
+.boss-copy h3 {
+  margin: 8px 0 14px;
+  font-size: 2.45rem;
+  line-height: 1.05;
+  text-shadow: 4px 4px 0 #000;
+}
+
+.boss-copy p,
+.chapter-rewards p,
+.chapter-milestones p {
+  color: var(--lavender);
+}
+
+.boss-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.boss-stats span {
+  padding: 8px 10px;
+  color: var(--moon);
+  background: var(--night);
+  border: 2px solid var(--line);
+}
+
+.chapter-rewards {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  background: rgba(36, 33, 61, 0.92);
+}
+
+.chapter-rewards div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px 14px;
+  align-items: center;
+  padding: 14px;
+  background: var(--night-2);
+  border: 3px solid var(--line);
+}
+
+.chapter-rewards img {
+  grid-row: span 2;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.chapter-rewards span {
+  color: var(--peach);
+  font-size: 1.05rem;
+}
+
+.chapter-rewards p {
+  grid-column: 2;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.chapter-milestones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.chapter-milestones div {
+  min-height: 190px;
+  padding: 22px;
+}
+
+.chapter-milestones span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 18px;
+  color: var(--night);
+  background: var(--blue);
+  border: 3px solid var(--line);
+}
+
+.chapter-milestones h3 {
+  margin: 0 0 10px;
+  font-size: 1.45rem;
+}
+
 .play-console {
   padding: 22px;
 }
@@ -862,6 +1026,12 @@ img:not(.phone-shell img) {
   filter: brightness(1.8);
 }
 
+.target.boss-target {
+  right: 17%;
+  bottom: 54px;
+  width: 128px;
+}
+
 .slash {
   position: absolute;
   right: 28%;
@@ -872,6 +1042,14 @@ img:not(.phone-shell img) {
   image-rendering: pixelated;
   opacity: 0;
   transform: rotate(-10deg);
+}
+
+.slash.moon-slash {
+  right: 18%;
+  bottom: 132px;
+  width: 138px;
+  height: 116px;
+  background-image: url("assets/generated/vfx/fx_moon_spring_slash.png");
 }
 
 .slash.show {
@@ -1151,7 +1329,7 @@ img:not(.phone-shell img) {
 
 .loot-board {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(136px, 1fr));
   gap: 14px;
 }
 
@@ -1207,7 +1385,7 @@ img:not(.phone-shell img) {
 
 .roadmap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
   margin-top: 40px;
 }
@@ -1351,6 +1529,8 @@ img:not(.phone-shell img) {
   .hero-inner,
   .play-grid,
   .camp-grid,
+  .chapter-grid,
+  .boss-showcase,
   .loop-panel,
   .companion-showcase,
   .final-cta {
@@ -1380,6 +1560,14 @@ img:not(.phone-shell img) {
 
   .loot-board {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chapter-milestones {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -1557,6 +1745,18 @@ img:not(.phone-shell img) {
     width: 64px;
   }
 
+  .target.boss-target {
+    right: 11%;
+    width: 96px;
+  }
+
+  .slash.moon-slash {
+    right: 11%;
+    bottom: 104px;
+    width: 112px;
+    height: 94px;
+  }
+
   .loop-tabs {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1582,6 +1782,7 @@ img:not(.phone-shell img) {
   }
 
   .ability-grid,
+  .chapter-milestones,
   .roadmap {
     grid-template-columns: 1fr;
   }
